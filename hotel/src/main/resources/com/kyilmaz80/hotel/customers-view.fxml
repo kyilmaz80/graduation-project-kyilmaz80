@@ -9,9 +9,22 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
-                        <Button fx:id="backButton" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#onClickBack" text="Back" />
+                        <ToolBar layoutX="172.0" layoutY="6.0" prefHeight="42.0" prefWidth="898.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
+                            </items>
+                        </ToolBar>
                     </children></AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
+                    <children>
+                        <TableView layoutX="46.0" layoutY="43.0" onMouseClicked="#onClickBack" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn prefWidth="75.0" text="C1" />
+                                <TableColumn prefWidth="75.0" text="C2" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
     </children>

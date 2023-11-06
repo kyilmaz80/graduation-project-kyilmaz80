@@ -37,7 +37,7 @@ public class SceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Image image = new Image(getClass().getResourceAsStream("/images/left-arrow.png"));
+        Image image = new Image(getClass().getResourceAsStream(DomainConstants.SCENE_BACK_ARROW_IMAGE));
         backButton.setGraphic(new ImageView(image));
 
     }
