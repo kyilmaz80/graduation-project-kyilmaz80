@@ -1,4 +1,4 @@
-package com.kyilmaz80.hotel;
+package com.kyilmaz80.hotel.utils;
 
 public class StringUtils {
     public static String toUpperFirstChar(String str) {

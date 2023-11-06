@@ -1,5 +1,6 @@
 package com.kyilmaz80.hotel;
 
+import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
