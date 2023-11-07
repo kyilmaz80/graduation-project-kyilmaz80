@@ -1,4 +1,6 @@
 package com.kyilmaz80.hotel.utils;
+import com.kyilmaz80.hotel.DomainConstants;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +15,15 @@ public class JDBCUtils {
     private static String filePath = "src/main/resources/jdbc.properties";
 
     private static String url;
+    private static String url2;
     private static String ip;
     private static String username;
     private static String password;
     private static String driver;
 
     private static String logFile;
+
+    public static String error;
 
     //private static BasicDataSource ds = new BasicDataSource();
 
@@ -43,6 +48,7 @@ public class JDBCUtils {
         // settings.list(System.out);
         // System.out.println();
         url = settings.getProperty("url");
+        url2 = settings.getProperty("url2");
         username = settings.getProperty("username");
         password = settings.getProperty("password");
         driver = settings.getProperty("driver");
@@ -72,7 +78,25 @@ public class JDBCUtils {
             connection = DriverManager.getConnection(url, username, password);
             //connection.setTransactionIsolation(transactionIsolationLevel);
         } catch (SQLException e) {
-            System.out.println("In JDBCUtil, problem with getting a connection: " + e.getMessage());
+            error = e.getMessage();
+            System.out.println("In JDBCUtil, problem with getting a connection: " + error);
+        } finally {
+            if (!error.isEmpty() && error.matches(DomainConstants.ERROR_NO_DATABASE_REGEX)) {
+                System.out.println("Unknown database match!");
+                //TODO: create init db tables
+                /*
+                System.out.println("Creating bunbled database...");
+                try {
+                    connection = DriverManager.getConnection(url2, username, password);
+                    String path = new File(ClassLoader.getSystemClassLoader().
+                            getResource("Hotel.sql").getFile()).toPath().toString();
+                    DBUtils.executeBatchedSQL(path, connection, 10);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                 */
+            }
         }
         // Properties clientInfo = new Properties();
         // clientInfo.setProperty("verifyServerCertificate", "false") ;
@@ -114,6 +138,7 @@ public class JDBCUtils {
     public static String getProperty(String propertyName) {
         String propertyValue = switch (propertyName) {
             case "url" -> url;
+            case "url2" -> url2;
             case "username" -> username;
             case "password" -> password;
             case "driver" -> driver;

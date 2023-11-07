@@ -6,4 +6,11 @@ public class StringUtils {
         String f = first + "";
         return  f + str.substring(1);
     }
+
+    public static boolean inputValid1(String str) {
+        if (!str.isEmpty() && str.matches("[a-zA-Z_ ]+")) {
+            return true;
+        }
+        return false;
+    }
 }

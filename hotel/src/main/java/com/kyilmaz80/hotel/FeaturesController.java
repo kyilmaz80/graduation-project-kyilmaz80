@@ -2,6 +2,7 @@ package com.kyilmaz80.hotel;
 
 import com.kyilmaz80.hotel.models.Features;
 import com.kyilmaz80.hotel.models.FeaturesModel;
+import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -64,8 +65,13 @@ public class FeaturesController extends SceneController implements Initializable
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                String featureName = featureNameTextField.getText();
                 System.out.println("On click Add");
-                model.insertFeature(featureNameTextField.getText());
+                if (!StringUtils.inputValid1(featureName)) {
+                    System.out.println("No feature!");
+                    return;
+                }
+                model.insertFeature(featureName);
                 model.selectFeatureList("");
                 featuresTableView.setItems(model.getFeatures());
             }

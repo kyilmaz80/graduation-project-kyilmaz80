@@ -6,5 +6,6 @@ public class DomainConstants {
     public static final String SCENE_BACK_ARROW_IMAGE = "/images/left-arrow.png";
     public static final int HOTEL_APP_WINDOW_HEIGHT = 700;
     public static final int HOTEL_APP_WINDOW_WIDTH = 900;
+    public static final String ERROR_NO_DATABASE_REGEX = "Unknown database .*";
 
 }
