@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import static java.sql.Connection.*;
 public class JDBCUtils {
@@ -21,7 +20,7 @@ public class JDBCUtils {
 
     private static String logFile;
 
-    private static BasicDataSource ds = new BasicDataSource();
+    //private static BasicDataSource ds = new BasicDataSource();
 
     private static int transactionIsolationLevel = TRANSACTION_READ_COMMITTED;
 
@@ -89,6 +88,7 @@ public class JDBCUtils {
     /*
      * https://gitbox.apache.org/repos/asf?p=commons-dbcp.git;a=blob_plain;f=doc/BasicDataSourceExample.java;hb=HEAD
      */
+    /*
     public static Connection getConnectionFromDataSource() {
 
         ds.setDriverClassName(driver);
@@ -105,6 +105,8 @@ public class JDBCUtils {
         return connection;
     }
 
+
+     */
     public void setTransactionIsolationLevel(int transactionIsolationLevel) {
         this.transactionIsolationLevel = transactionIsolationLevel;
     }
