@@ -48,7 +48,7 @@ public class FeaturesController extends SceneController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //super.initialize(location, resources);
+        super.initialize(location, resources);
         /*
         featuresId.setCellValueFactory(new PropertyValueFactory<Features, Integer>("id"));
         featuresName.setCellValueFactory((new PropertyValueFactory<Features, String>("name")));

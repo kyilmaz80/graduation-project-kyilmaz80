@@ -9,15 +9,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RoomsModel {
+
     private ObservableList<Rooms> rooms;
 
-    public RoomsModel() {
-        rooms = FXCollections.observableArrayList();
+    private ObservableList<RoomTypes> roomTypes;
+
+    public void setRoomTypes(ObservableList<RoomTypes> roomTypes) {
+        this.roomTypes = roomTypes;
     }
 
     public ObservableList<Rooms> getRooms() {
         return rooms;
     }
+
+    public ObservableList<RoomTypes> getRoomTypes() {
+        return roomTypes;
+    }
+
+    public RoomsModel() {
+        rooms = FXCollections.observableArrayList();
+        roomTypes =  FXCollections.observableArrayList();
+    }
+
 
     public void setRooms(ObservableList<Rooms> rooms) {
         this.rooms = rooms;
@@ -26,6 +39,7 @@ public class RoomsModel {
     public void selectAllRooms() {
         selectRoomsListLike("");
     }
+
 
     public void selectRoomsListLike(String searchString) {
         ObservableList<Rooms> newList  = FXCollections.observableArrayList();
@@ -52,6 +66,30 @@ public class RoomsModel {
 
 
         rooms = newList;
+    }
+
+    public void selectRoomTypesList() {
+        ObservableList<RoomTypes> newList  = FXCollections.observableArrayList();
+        String sqlString = "SELECT * FROM RoomType";
+
+        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString);
+
+        if (rs == null) {
+            System.out.println(JDBCUtils.error);
+            return;
+        }
+
+        try {
+            while(rs.next()) {
+                newList.add(new RoomTypes(rs.getInt("id"),
+                        rs.getString("tname")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        roomTypes = newList;
+
     }
 
 }

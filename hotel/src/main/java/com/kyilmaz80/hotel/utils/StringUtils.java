@@ -8,7 +8,7 @@ public class StringUtils {
     }
 
     public static boolean inputValid1(String str) {
-        if (!str.isEmpty() && str.matches("[a-zA-Z_ ]+")) {
+        if (!str.isEmpty() && str.matches("[a-zA-Z\\-0-9_ ]+")) {
             return true;
         } else if (str.isEmpty()) {
             return true;
