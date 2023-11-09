@@ -19,7 +19,7 @@
                <children>
                   <TableView layoutX="46.0" layoutY="43.0" onMouseClicked="#onClickBack" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="ID" />
                       <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                   </TableView>

@@ -72,6 +72,27 @@ public class DBUtils {
         return rs;
     }
 
+    public ResultSet getSelectResultSetFromTable(String sqlString, String searchString, String filterColumn) {
+        Connection connection = null;
+        ResultSet rs = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB Connection problem!");
+                return null;
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sqlString);
+            ps.setString(1, "%" + searchString + "%");
+            ps.setString(2, filterColumn);
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rs;
+    }
+
 
     //https://www.baeldung.com/java-run-sql-script
     static void executeBatchedSQL(String scriptFilePath, Connection connection, int batchSize) throws Exception {

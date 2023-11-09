@@ -23,7 +23,7 @@ public class JDBCUtils {
 
     private static String logFile;
 
-    public static String error;
+    public static String error = "";
 
     //private static BasicDataSource ds = new BasicDataSource();
 

@@ -27,6 +27,9 @@ public class FeaturesController extends SceneController implements Initializable
     private TableColumn<Features, String> featuresName;
 
     @FXML
+    private TableColumn<Features, Double> featuresPrice;
+
+    @FXML
     private Button filterButton;
 
     @FXML
@@ -37,6 +40,9 @@ public class FeaturesController extends SceneController implements Initializable
 
     @FXML
     private TextField featureNameTextField;
+
+    @FXML
+    private TextField featurePriceTextField;
 
     private FeaturesModel model;
 
@@ -57,7 +63,20 @@ public class FeaturesController extends SceneController implements Initializable
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("On click Filter");
-                model.selectFeatureList(featureNameTextField.getText());
+                String featureName = featureNameTextField.getText();
+                String featurePrice = featurePriceTextField.getText();
+                if (!StringUtils.inputValid1(featureName)) {
+                    System.err.println("FeatureName Input not valid!");
+                    return;
+                }
+
+                if (!featurePrice.isEmpty()) {
+                    System.out.println("Feature Price not empty");
+                    model.selectFeatureListLikeFilter(featureName, featurePrice);
+                } else {
+                    model.selectFeatureListLike(featureName);
+                }
+
                 featuresTableView.setItems(model.getFeatures());
             }
         });
@@ -68,11 +87,11 @@ public class FeaturesController extends SceneController implements Initializable
                 String featureName = featureNameTextField.getText();
                 System.out.println("On click Add");
                 if (!StringUtils.inputValid1(featureName)) {
-                    System.out.println("No feature!");
+                    System.err.println("FeatureName Input not valid!");
                     return;
                 }
-                model.insertFeature(featureName);
-                model.selectFeatureList("");
+                model.insertFeature(featureName, 0.00);
+                model.selectAllFeatures();
                 featuresTableView.setItems(model.getFeatures());
             }
         });
@@ -91,7 +110,7 @@ public class FeaturesController extends SceneController implements Initializable
                 System.out.println("Deleting id " + selectedId);
 
                 model.deleteFeature(selectedId);
-                model.selectFeatureList("");
+                model.selectAllFeatures();
                 featuresTableView.setItems(model.getFeatures());
             }
         });
@@ -99,9 +118,11 @@ public class FeaturesController extends SceneController implements Initializable
 
         featuresId.setCellValueFactory(new PropertyValueFactory<Features, Integer>("id"));
         featuresName.setCellValueFactory((new PropertyValueFactory<Features, String>("name")));
+        featuresPrice.setCellValueFactory((new PropertyValueFactory<Features, Double>("price")));
+
         model = new FeaturesModel();
 
-        model.selectFeatureList("");
+        model.selectAllFeatures();
         featuresTableView.setItems(model.getFeatures());
 
     }

@@ -23,9 +23,13 @@ public class FeaturesModel {
         //features.add(new Features("TV"));
     }
 
-    public void selectFeatureList(String searchString) {
+    public void selectAllFeatures() {
+        selectFeatureListLike("");
+    }
+
+    public void selectFeatureListLike(String searchString) {
         ObservableList<Features> newList  = FXCollections.observableArrayList();
-        String sqlString = "SELECT * FROM Feature WHERE name LIKE ? ";
+        String sqlString = "SELECT * FROM Feature WHERE name LIKE ?";
 
         ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, searchString);
 
@@ -36,36 +40,47 @@ public class FeaturesModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Features(rs.getInt("id"), rs.getString("name")));
+                newList.add(new Features(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        /*
-        Connection connection = null;
-        try {
-            connection = JDBCUtils.getConnection();
-            if (connection == null) {
-                ViewUtils.showAlert("DB Connection problem!");
-            }
-            String updateString = "SELECT * FROM Feature WHERE name LIKE ? ";
-            PreparedStatement ps = connection.prepareStatement(updateString);
-            ps.setString(1, "%" + searchString + "%");
-            ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
-                newList.add(new Features(rs.getInt("id"), rs.getString("name")));
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-         */
 
         features = newList;
     }
 
-    public void insertFeature(String name) {
+    public void selectFeatureListLikeFilter(String searchString, String filterPrice) {
+        ObservableList<Features> newList  = FXCollections.observableArrayList();
+        String sqlString = "SELECT * FROM Feature WHERE name LIKE ? and price = ? ";
+        // SELECT * FROM upod_otel.Feature WHERE name like "%man%" and price = price;
+        // SELECT * FROM upod_otel.Feature WHERE name like "%man%";
+
+
+        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, searchString, filterPrice);
+
+        if (rs == null) {
+            System.out.println(JDBCUtils.error);
+            return;
+        }
+
+        try {
+            while(rs.next()) {
+                newList.add(new Features(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        features = newList;
+    }
+
+    public void insertFeature(String name, double price) {
         String sqlString = "INSERT INTO Feature (name) VALUES(?)";
         DBUtils.executeStatement(sqlString, name);
     }

@@ -15,7 +15,7 @@
                                 <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
                             </items>
                         </ToolBar>
-                  <TextField fx:id="featureNameTextField" layoutX="306.0" layoutY="129.0" prefHeight="33.0" prefWidth="249.0" promptText="Feature" />
+                  <TextField fx:id="featureNameTextField" layoutX="260.0" layoutY="129.0" prefHeight="33.0" prefWidth="172.0" promptText="Feature" />
                   <Label layoutX="341.0" layoutY="73.0" text="Add Room Features" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
@@ -24,6 +24,7 @@
                   <Button fx:id="addButton" layoutX="384.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
                   <Button fx:id="filterButton" layoutX="260.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Filter" />
                   <Button fx:id="deleteButton" layoutX="509.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
+                  <TextField fx:id="featurePriceTextField" layoutX="454.0" layoutY="129.0" prefHeight="33.0" prefWidth="143.0" promptText="Price" />
                     </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
                     <children>
@@ -31,6 +32,7 @@
                             <columns>
                                 <TableColumn fx:id="featuresId" prefWidth="75.0" text="ID" />
                                 <TableColumn fx:id="featuresName" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="featuresPrice" prefWidth="75.0" text="Price" />
                             </columns>
                         </TableView>
                     </children>

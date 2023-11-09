@@ -10,6 +10,15 @@ public class StringUtils {
     public static boolean inputValid1(String str) {
         if (!str.isEmpty() && str.matches("[a-zA-Z_ ]+")) {
             return true;
+        } else if (str.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean inputValid2(String str) {
+        if (str.matches("[0-9.]+")) {
+            return true;
         }
         return false;
     }

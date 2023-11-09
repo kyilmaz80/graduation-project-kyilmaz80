@@ -1,10 +1,23 @@
 package com.kyilmaz80.hotel.models;
 
 public class Rooms {
+    // mapping -> view_room view
     private int id;
     private int capacity;
     private double price;
     private String name;
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
+    }
+
+    private String tname;
+
+
 
     public int getId() {
         return id;
@@ -38,16 +51,18 @@ public class Rooms {
         this.name = name;
     }
 
-    public Rooms(int capacity, double price, String name) {
+    public Rooms(int capacity, double price, String name, String tname) {
         this.capacity = capacity;
         this.price = price;
         this.name = name;
+        this.tname = tname;
     }
 
-    public Rooms(int id, int capacity, double price, String name) {
+    public Rooms(int id, int capacity, double price, String name, String tname) {
         this.id = id;
         this.capacity = capacity;
         this.price = price;
         this.name = name;
+        this.tname = tname;
     }
 }
