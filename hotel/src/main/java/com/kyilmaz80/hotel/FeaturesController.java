@@ -98,11 +98,15 @@ public class FeaturesController extends SceneController implements Initializable
                 }
 
                 if (!StringUtils.inputValid2(featurePrice)) {
-                    System.err.println("FeatureName Input not valid!");
+                    System.err.println("FeaturePrice Input not valid!");
                     return;
                 }
 
-                model.insertFeature(featureName, 0.00);
+                if (!featurePrice.isEmpty()) {
+                    model.insertFeature(featureName, Double.parseDouble(featurePrice));
+                } else {
+                    model.insertFeature(featureName);
+                }
                 model.selectAllFeatures();
                 featuresTableView.setItems(model.getFeatures());
             }

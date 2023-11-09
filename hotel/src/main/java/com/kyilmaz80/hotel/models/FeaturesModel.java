@@ -80,9 +80,13 @@ public class FeaturesModel {
         features = newList;
     }
 
-    public void insertFeature(String name, double price) {
+    public void insertFeature(String name) {
         String sqlString = "INSERT INTO Feature (name) VALUES(?)";
         DBUtils.executeStatement(sqlString, name);
+    }
+    public void insertFeature(String name, Double price) {
+        String sqlString = "INSERT INTO Feature (name,price) VALUES(?,?)";
+        DBUtils.executeStatement(sqlString, name, price);
     }
 
     public void deleteFeature(int id) {

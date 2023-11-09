@@ -34,6 +34,26 @@ public class DBUtils {
 
     }
 
+    public static void executeStatement(String sqlString, String col1, Double col2 ) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB connection problem!");
+                return;
+            }
+            String updateString = sqlString;
+            PreparedStatement ps = connection.prepareStatement(updateString);
+            ps.setString(1, col1);
+            ps.setDouble(2, col2.doubleValue());
+            ps.execute();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public static void executeStatement(String sqlString, int id) {
         Connection connection = null;
         try {
@@ -94,6 +114,7 @@ public class DBUtils {
     }
 
 
+    //TODO: FUTURE USE SQL DB INIT
     //https://www.baeldung.com/java-run-sql-script
     static void executeBatchedSQL(String scriptFilePath, Connection connection, int batchSize) throws Exception {
         List<String> sqlStatements = parseSQLScript(scriptFilePath);
