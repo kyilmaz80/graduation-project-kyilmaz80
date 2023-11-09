@@ -14,13 +14,18 @@
                       <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
                     </items>
                   </ToolBar>
+                  <TextField fx:id="roomNameTextField" layoutX="260.0" layoutY="129.0" prefHeight="33.0" prefWidth="172.0" promptText="Room" />
+                  <Button fx:id="filterButton" layoutX="260.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Filter" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
                <children>
-                  <TableView layoutX="46.0" layoutY="43.0" onMouseClicked="#onClickBack" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="roomsTableView" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="ID" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="roomsId" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="roomsName" prefWidth="107.0" text="Name" />
+                        <TableColumn fx:id="roomsCapacity" prefWidth="85.0" text="Capacity" />
+                        <TableColumn fx:id="roomsPrice" prefWidth="78.0" text="Price" />
+                        <TableColumn fx:id="roomsTypeId" prefWidth="77.0" text="TypeId" />
                     </columns>
                   </TableView>
                </children>

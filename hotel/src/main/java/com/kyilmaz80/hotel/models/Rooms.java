@@ -6,19 +6,7 @@ public class Rooms {
     private int capacity;
     private double price;
     private String name;
-
-    public String getTname() {
-        return tname;
-    }
-
-    public void setTname(String tname) {
-        this.tname = tname;
-    }
-
-    private String tname;
-
-
-
+    private int tid;
     public int getId() {
         return id;
     }
@@ -51,18 +39,25 @@ public class Rooms {
         this.name = name;
     }
 
-    public Rooms(int capacity, double price, String name, String tname) {
+    public int getTid() {
+        return tid;
+    }
+    public void setTid(int tid) {
+        this.tid = tid;
+    }
+
+    public Rooms(int capacity, double price, String name, int typeId) {
         this.capacity = capacity;
         this.price = price;
         this.name = name;
-        this.tname = tname;
+        this.tid = typeId;
     }
 
-    public Rooms(int id, int capacity, double price, String name, String tname) {
+    public Rooms(int id, int capacity, double price, String name, int typeId) {
         this.id = id;
         this.capacity = capacity;
         this.price = price;
         this.name = name;
-        this.tname = tname;
+        this.tid = typeId;
     }
 }
