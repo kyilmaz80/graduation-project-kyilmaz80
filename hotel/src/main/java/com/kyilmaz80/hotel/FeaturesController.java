@@ -70,6 +70,11 @@ public class FeaturesController extends SceneController implements Initializable
                     return;
                 }
 
+                if (!StringUtils.inputValid2(featurePrice)) {
+                    System.err.println("FeaturePrice Input not valid!");
+                    return;
+                }
+
                 if (!featurePrice.isEmpty()) {
                     System.out.println("Feature Price not empty");
                     model.selectFeatureListLikeFilter(featureName, featurePrice);
@@ -85,11 +90,18 @@ public class FeaturesController extends SceneController implements Initializable
             @Override
             public void handle(ActionEvent actionEvent) {
                 String featureName = featureNameTextField.getText();
+                String featurePrice = featurePriceTextField.getText();
                 System.out.println("On click Add");
                 if (!StringUtils.inputValid1(featureName)) {
                     System.err.println("FeatureName Input not valid!");
                     return;
                 }
+
+                if (!StringUtils.inputValid2(featurePrice)) {
+                    System.err.println("FeatureName Input not valid!");
+                    return;
+                }
+
                 model.insertFeature(featureName, 0.00);
                 model.selectAllFeatures();
                 featuresTableView.setItems(model.getFeatures());

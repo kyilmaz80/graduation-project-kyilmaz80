@@ -19,6 +19,8 @@ public class StringUtils {
     public static boolean inputValid2(String str) {
         if (str.matches("[0-9.]+")) {
             return true;
+        }else if (str.isEmpty()) {
+            return true;
         }
         return false;
     }
