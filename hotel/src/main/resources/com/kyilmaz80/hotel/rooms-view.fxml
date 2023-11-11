@@ -18,7 +18,7 @@
                   <Button fx:id="filterButton" layoutX="277.0" layoutY="208.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Filter" />
                   <Label layoutX="205.0" layoutY="85.0" text="Name" />
                   <Label layoutX="205.0" layoutY="136.0" text="Capacity" />
-                  <TextField fx:id="roomCapacityTextField" layoutX="278.0" layoutY="127.0" prefHeight="33.0" promptText="1,2,3,..." />
+                  <TextField fx:id="roomCapacityTextField" layoutX="278.0" layoutY="127.0" prefHeight="33.0" promptText="1" />
                   <Label layoutX="527.0" layoutY="85.0" text="Price" />
                   <TextField fx:id="roomPriceTextField" layoutX="591.0" layoutY="77.0" prefHeight="33.0" promptText="1500" />
                   <ComboBox fx:id="roomTypeComboBox" layoutX="591.0" layoutY="128.0" prefHeight="33.0" prefWidth="171.0" />

@@ -59,7 +59,8 @@ public class FeaturesModel {
         // SELECT * FROM upod_otel.Feature WHERE name like "%man%";
 
 
-        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, searchString, filterPrice);
+        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString,
+                "%" + searchString + "%", filterPrice);
 
         if (rs == null) {
             System.out.println(JDBCUtils.error);

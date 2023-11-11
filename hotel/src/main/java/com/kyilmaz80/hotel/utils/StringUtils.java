@@ -24,4 +24,15 @@ public class StringUtils {
         }
         return false;
     }
+
+    public static boolean inputValid3(String str) {
+        if (str.matches("[0-9]+")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String filterStr(String str) {
+        return str;
+    }
 }

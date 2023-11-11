@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,7 +105,7 @@ public class DBUtils {
             }
 
             PreparedStatement ps = connection.prepareStatement(sqlString);
-            ps.setString(1, "%" + searchString + "%");
+            ps.setString(1, searchString);
             ps.setString(2, filterColumn);
             rs = ps.executeQuery();
 
@@ -112,6 +114,35 @@ public class DBUtils {
         }
         return rs;
     }
+
+    public ResultSet getSelectResultSetFromTable(String sqlString, Map<String, String> criteria) {
+        Connection connection = null;
+        ResultSet rs = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB Connection problem!");
+                return null;
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sqlString);
+
+            int parameterIndex = 1;
+            for (Map.Entry<String, String> entry : criteria.entrySet()) {
+                //System.out.println("setting param " + parameterIndex + " " +  entry.getKey());
+                //ps.setObject(parameterIndex++, entry.getKey());
+                System.out.println("setting param " + parameterIndex + " " +  entry.getValue());
+                ps.setObject(parameterIndex++, entry.getValue());
+            }
+
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rs;
+    }
+
 
     public ResultSet getSelectResultSetFromTable(String sqlString) {
         Connection connection = null;

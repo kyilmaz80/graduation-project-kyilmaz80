@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RoomsController extends SceneController implements Initializable {
@@ -59,11 +61,27 @@ public class RoomsController extends SceneController implements Initializable {
                 System.out.println("On click Filter");
                 String roomName = roomNameTextField.getText();
                 System.out.println("room name: " + roomName);
+                String roomCapacity = roomCapacityTextField.getText();
+                System.out.println("room capacity: " + roomCapacity);
+                String roomPrice = roomPriceTextField.getText();
+                System.out.println("room price: " + roomPrice);
+
                 //String featurePrice = featurePriceTextField.getText();
                 if (!StringUtils.inputValid1(roomName)) {
                     System.err.println("RoomName Input not valid!");
                     return;
                 }
+
+                if (!roomPrice.isEmpty() & !StringUtils.inputValid2(roomPrice)) {
+                    System.err.println("RoomPrice Input not valid!");
+                    return;
+                }
+
+                if (!roomCapacity.isEmpty() & !StringUtils.inputValid3(roomCapacity)) {
+                    System.err.println("RoomCapacity Input not valid!");
+                    return;
+                }
+
 
                 /*
                 if (!StringUtils.inputValid2(featurePrice)) {
@@ -71,16 +89,24 @@ public class RoomsController extends SceneController implements Initializable {
                     return;
                 }
 
-
                 if (!featurePrice.isEmpty()) {
                     System.out.println("Feature Price not empty");
                     model.selectFeatureListLikeFilter(featureName, featurePrice);
                 } else {
                     model.selectFeatureListLike(featureName);
                 }
-
                  */
-                model.selectRoomsListLike(roomName);
+                Map<String,String> mapColumns = new HashMap<String,String>();
+                mapColumns.put("price", roomPrice);
+                if (!roomPrice.isEmpty()) {
+
+                    model.selectRoomsListLikeFilter(mapColumns);
+                } else if (!roomCapacity.isEmpty()) {
+                    model.selectRoomsListLikeFilter("capacity", roomCapacity);
+                } else {
+                    model.selectRoomsListLike(roomName);
+                }
+
                 roomsTableView.setItems(model.getRooms());
             }
         });
