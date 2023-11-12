@@ -212,10 +212,6 @@ public class DBUtils {
 
         try {
             while(rs.next()) {
-                rsmetadata = rs.getMetaData();
-                int columnCount = rsmetadata.getColumnCount();
-                String[] columnNames = new String[columnCount];
-                //Rooms.class.getDeclaredFields()
                 String className = "com.kyilmaz80.hotel.models." + tableName;
                 Class<?> clazz = null;
                 Field[] fields;
@@ -240,14 +236,7 @@ public class DBUtils {
                 if (entity != null) {
                     newList.add(entity);
                 }
-                /*
-                newList.add(new Rooms(rs.getInt("id"),
-                        rs.getInt("capacity"),
-                        rs.getDouble("price"),
-                        rs.getString("name"),
-                        rs.getInt("room_type_id")));
 
-                 */
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

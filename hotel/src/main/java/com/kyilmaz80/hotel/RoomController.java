@@ -65,59 +65,38 @@ public class RoomController extends SceneController implements Initializable {
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String roomName;
-                String roomCapacity;
-                String roomPrice;
-                int tid;
-
-                System.out.println("On click Filter");
-                roomName = roomNameTextField.getText();
-                System.out.println("room name: " + roomName);
-                roomCapacity = roomCapacityTextField.getText();
-                System.out.println("room capacity: " + roomCapacity);
-                roomPrice = roomPriceTextField.getText();
-                System.out.println("room price: " + roomPrice);
-
 
                 Map<String,String> mapColumns = new HashMap<String,String>();
 
-                //String featurePrice = featurePriceTextField.getText();
-                if (!roomName.isEmpty() && !StringUtils.inputValid1(roomName)) {
-                    System.err.println("RoomName Input not valid!");
+                if (!validateInputs()) {
+                    System.out.println("Inputs not valid!");
                     return;
                 }
 
 
-                if (!roomPrice.isEmpty() & !StringUtils.inputValid2(roomPrice)) {
-                    System.err.println("RoomPrice Input not valid!");
-                    return;
+                if (!roomNameTextField.getText().isEmpty()) {
+                    mapColumns.put("name", roomNameTextField.getText());
                 }
 
-                if (!roomCapacity.isEmpty() & !StringUtils.inputValid3(roomCapacity)) {
-                    System.err.println("RoomCapacity Input not valid!");
-                    return;
+                if (!roomPriceTextField.getText().isEmpty()) {
+                    mapColumns.put("price", roomPriceTextField.getText());
                 }
 
-                if (!roomName.isEmpty()) {
-                    mapColumns.put("name", roomName);
+                if (!roomCapacityTextField.getText().isEmpty()) {
+                    mapColumns.put("capacity", roomCapacityTextField.getText());
                 }
 
-                if (!roomPrice.isEmpty()) {
-                    mapColumns.put("price", roomPrice);
-                }
-
-                if (!roomCapacity.isEmpty()) {
-                    mapColumns.put("capacity", roomCapacity);
-                }
 
                 if (roomTypeComboBox.getValue() != null) {
-                    tid = roomTypeComboBox.getValue().getRoomTypeId();
+                    int tid = roomTypeComboBox.getValue().getRoomTypeId();
                     System.out.println("room type id: " + tid);
                     mapColumns.put("tid", String.valueOf(tid));
                 }
 
+
+
                 if (mapColumns.isEmpty()) {
-                    model.selectRoomListLike(roomName);
+                    model.selectRoomListLike(roomNameTextField.getText());
                 } else {
                     //model.selectRoomListFilter(mapColumns);
                     model.selectRoomListFilter2(mapColumns);
@@ -169,5 +148,39 @@ public class RoomController extends SceneController implements Initializable {
     private boolean areAllInputsEntered() {
         return !roomNameTextField.getText().isEmpty() && !roomCapacityTextField.getText().isEmpty() &&
                 !roomPriceTextField.getText().isEmpty() &&  roomTypeComboBox.getValue() != null ;
+    }
+
+    private boolean validateInputs() {
+        String roomName;
+        String roomCapacity;
+        String roomPrice;
+        int tid;
+
+        System.out.println("On click Filter");
+        roomName = roomNameTextField.getText();
+        System.out.println("room name: " + roomName);
+        roomCapacity = roomCapacityTextField.getText();
+        System.out.println("room capacity: " + roomCapacity);
+        roomPrice = roomPriceTextField.getText();
+        System.out.println("room price: " + roomPrice);
+
+
+        if (!roomName.isEmpty() && !StringUtils.inputValid1(roomName)) {
+            System.err.println("RoomName Input not valid!");
+            return false;
+        }
+
+        if (!roomPrice.isEmpty() & !StringUtils.inputValid2(roomPrice)) {
+            System.err.println("RoomPrice Input not valid!");
+            return false;
+        }
+
+        if (!roomCapacity.isEmpty() & !StringUtils.inputValid3(roomCapacity)) {
+            System.err.println("RoomCapacity Input not valid!");
+            return false;
+        }
+
+
+        return true;
     }
 }
