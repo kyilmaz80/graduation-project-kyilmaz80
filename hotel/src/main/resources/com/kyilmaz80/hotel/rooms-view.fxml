@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.RoomsController">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.RoomController">
    <children>
       <SplitPane dividerPositions="0.40257879656160456" layoutX="273.0" layoutY="111.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -23,18 +23,18 @@
                   <TextField fx:id="roomPriceTextField" layoutX="591.0" layoutY="77.0" prefHeight="33.0" promptText="1500" />
                   <ComboBox fx:id="roomTypeComboBox" layoutX="591.0" layoutY="128.0" prefHeight="33.0" prefWidth="171.0" />
                   <Label layoutX="523.0" layoutY="137.0" text="Type" />
-                  <Button disable="true" layoutX="418.0" layoutY="208.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
-                  <Button layoutX="559.0" layoutY="208.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
+                  <Button fx:id="addButton" disable="true" layoutX="418.0" layoutY="208.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
+                  <Button fx:id="deleteButton" layoutX="559.0" layoutY="208.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
                <children>
-                  <TableView fx:id="roomsTableView" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="roomTableView" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="roomsId" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="roomsName" prefWidth="107.0" text="Name" />
-                        <TableColumn fx:id="roomsCapacity" prefWidth="85.0" text="Capacity" />
-                        <TableColumn fx:id="roomsPrice" prefWidth="78.0" text="Price" />
-                        <TableColumn fx:id="roomsTypeId" prefWidth="77.0" text="TypeId" />
+                      <TableColumn fx:id="roomId" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="roomName" prefWidth="107.0" text="Name" />
+                        <TableColumn fx:id="roomCapacity" prefWidth="85.0" text="Capacity" />
+                        <TableColumn fx:id="roomPrice" prefWidth="78.0" text="Price" />
+                        <TableColumn fx:id="roomTypeId" prefWidth="77.0" text="TypeId" />
                     </columns>
                   </TableView>
                </children>

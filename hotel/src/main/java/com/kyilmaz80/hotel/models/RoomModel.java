@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class RoomsModel {
+public class RoomModel {
 
-    private ObservableList<Rooms> rooms;
+    private ObservableList<Room> rooms;
 
     private ObservableList<RoomTypes> roomTypes;
 
@@ -20,7 +20,7 @@ public class RoomsModel {
         this.roomTypes = roomTypes;
     }
 
-    public ObservableList<Rooms> getRooms() {
+    public ObservableList<Room> getRooms() {
         return rooms;
     }
 
@@ -28,23 +28,23 @@ public class RoomsModel {
         return roomTypes;
     }
 
-    public RoomsModel() {
+    public RoomModel() {
         rooms = FXCollections.observableArrayList();
         roomTypes =  FXCollections.observableArrayList();
     }
 
 
-    public void setRooms(ObservableList<Rooms> rooms) {
+    public void setRooms(ObservableList<Room> rooms) {
         this.rooms = rooms;
     }
 
     public void selectAllRooms() {
-        selectRoomsListLike("");
+        selectRoomListLike("");
     }
 
 
-    public void selectRoomsListLike(String searchString) {
-        ObservableList<Rooms> newList  = FXCollections.observableArrayList();
+    public void selectRoomListLike(String searchString) {
+        ObservableList<Room> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT * FROM Room WHERE name LIKE ?";
 
         ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, searchString);
@@ -56,11 +56,11 @@ public class RoomsModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Rooms(rs.getInt("id"),
+                newList.add(new Room(rs.getInt("id"),
                         rs.getInt("capacity"),
-                        rs.getDouble("price"),
+                        rs.getBigDecimal("price"),
                         rs.getString("name"),
-                        rs.getInt("room_type_id")));
+                        rs.getInt("tid")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -70,8 +70,8 @@ public class RoomsModel {
         rooms = newList;
     }
 
-    public void selectRoomsListLikeFilter(String searchCol, String searchString) {
-        ObservableList<Rooms> newList  = FXCollections.observableArrayList();
+    public void selectRoomListFilter(String searchCol, String searchString) {
+        ObservableList<Room> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT * FROM Room WHERE ? = ?";
 
 
@@ -84,25 +84,38 @@ public class RoomsModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Rooms(rs.getInt("id"),
+                newList.add(new Room(rs.getInt("id"),
                         rs.getInt("capacity"),
-                        rs.getDouble("price"),
+                        rs.getBigDecimal("price"),
                         rs.getString("name"),
-                        rs.getInt("room_type_id")));
+                        rs.getInt("tid")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-
         rooms = newList;
     }
 
-    public void selectRoomsListLikeFilter(Map<String, String> columnsMap) {
-        ObservableList<Rooms> newList  = FXCollections.observableArrayList();
-        String query = "";
+    public void selectRoomListFilter2(Map<String, String> columnsMap) {
+        ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "Room");
+        rooms = (ObservableList<Room>) newList;
+    }
+
+    public void selectRoomListFilter(Map<String, String> columnsMap) {
+        ObservableList<Room> newList  = FXCollections.observableArrayList();
+        String query = "SELECT * FROM Room WHERE %s = ?";
+
+        int i = 0;
         for (Map.Entry<String, String> entry : columnsMap.entrySet()) {
-            query = String.format("SELECT * FROM Room WHERE %s = ?", StringUtils.filterStr(entry.getKey()));
+            if (i == 0) {
+                query = String.format(query, StringUtils.filterStr(entry.getKey()));
+            }else {
+                StringBuilder sb = new StringBuilder(query);
+                query = sb.append(" and %s = ?").toString();
+                query = String.format(query, StringUtils.filterStr(entry.getKey()));
+            }
+            i++;
         }
 
         //String sqlString = "SELECT * FROM Room WHERE ? = ?";
@@ -128,11 +141,11 @@ public class RoomsModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Rooms(rs.getInt("id"),
+                newList.add(new Room(rs.getInt("id"),
                         rs.getInt("capacity"),
-                        rs.getDouble("price"),
+                        rs.getBigDecimal("price"),
                         rs.getString("name"),
-                        rs.getInt("room_type_id")));
+                        rs.getInt("tid")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

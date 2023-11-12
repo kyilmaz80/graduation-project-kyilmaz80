@@ -1,10 +1,12 @@
 package com.kyilmaz80.hotel.models;
 
-public class Rooms {
+import java.math.BigDecimal;
+
+public class Room {
     // mapping -> view_room view
     private int id;
     private int capacity;
-    private double price;
+    private BigDecimal price;
     private String name;
     private int tid;
     public int getId() {
@@ -23,11 +25,11 @@ public class Rooms {
         this.capacity = capacity;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -46,18 +48,27 @@ public class Rooms {
         this.tid = tid;
     }
 
-    public Rooms(int capacity, double price, String name, int typeId) {
+    public Room(int capacity, BigDecimal price, String name, int typeId) {
         this.capacity = capacity;
         this.price = price;
         this.name = name;
         this.tid = typeId;
     }
 
-    public Rooms(int id, int capacity, double price, String name, int typeId) {
+    public Room(int id, int capacity, BigDecimal price, String name, int typeId) {
         this.id = id;
         this.capacity = capacity;
         this.price = price;
         this.name = name;
         this.tid = typeId;
     }
+
+    public Room() {
+        this.id = 0;
+        this.capacity = 0;
+        this.price = BigDecimal.ZERO;
+        this.name = "";
+        this.tid = 0;
+    }
+
 }
