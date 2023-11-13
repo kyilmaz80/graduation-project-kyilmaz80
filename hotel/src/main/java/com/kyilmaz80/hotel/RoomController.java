@@ -67,7 +67,7 @@ public class RoomController extends SceneController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Map<String,String> mapColumns = new HashMap<String,String>();
+                Map<String,String> roomMapColumns = new HashMap<String,String>();
 
                 if (!validateInputs()) {
                     System.out.println("Inputs not valid!");
@@ -76,33 +76,33 @@ public class RoomController extends SceneController implements Initializable {
 
 
                 if (!roomNameTextField.getText().isEmpty()) {
-                    mapColumns.put("name", roomNameTextField.getText());
+                    roomMapColumns.put("name", roomNameTextField.getText());
                 }
 
                 if (!roomPriceTextField.getText().isEmpty()) {
-                    mapColumns.put("price", roomPriceTextField.getText());
+                    roomMapColumns.put("price", roomPriceTextField.getText());
                 }
 
                 if (!roomCapacityTextField.getText().isEmpty()) {
-                    mapColumns.put("capacity", roomCapacityTextField.getText());
+                    roomMapColumns.put("capacity", roomCapacityTextField.getText());
                 }
 
 
                 if (roomTypeComboBox.getValue() != null) {
-                    int tid = roomTypeComboBox.getValue().getRoomTypeId();
+                    int tid = roomTypeComboBox.getValue().getId();
                     System.out.println("room type id: " + tid);
                     if (tid != -1) {
-                        mapColumns.put("tid", String.valueOf(tid));
+                        roomMapColumns.put("tid", String.valueOf(tid));
                     }
                 }
 
 
 
-                if (mapColumns.isEmpty()) {
+                if (roomMapColumns.isEmpty()) {
                     model.selectRoomListLike(roomNameTextField.getText());
                 } else {
                     //model.selectRoomListFilter(mapColumns);
-                    model.selectRoomListFilter2(mapColumns);
+                    model.selectRoomListFilter2(roomMapColumns);
                 }
 
                 roomTableView.setItems(model.getRooms());
@@ -113,7 +113,7 @@ public class RoomController extends SceneController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 var comboObj = (RoomType) roomTypeComboBox.getValue();
-                System.out.println("On combo selected: " + " id: " +  comboObj.getRoomTypeId()  +
+                System.out.println("On combo selected: " + " id: " +  comboObj.getId()  +
                         " " + roomTypeComboBox.getValue());
                 System.out.println("Are all inputs entered? " + areAllInputsEntered());
                 if(areAllInputsEntered()) {
@@ -142,8 +142,9 @@ public class RoomController extends SceneController implements Initializable {
         model.selectAllRooms();
         roomTableView.setItems(model.getRooms());
 
+        String roomTypeColumns = "id,tname";
         // combo box init
-        model.selectRoomTypesList();
+        model.selectRoomTypesList2(roomTypeColumns);
         //roomTypeComboBox.getItems().addAll(model.getRoomTypes());
         ObservableList<RoomType> roomTypeObservable = model.getRoomTypes();
         //https://stackoverflow.com/questions/51689888/how-can-i-correctly-add-a-null-item-to-javafxs-combobox

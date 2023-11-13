@@ -1,12 +1,14 @@
 package com.kyilmaz80.hotel.utils;
 
 import com.kyilmaz80.hotel.ViewUtils;
+import com.kyilmaz80.hotel.models.RoomType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.invoke.StringConcatFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -172,6 +174,58 @@ public class DBUtils {
         return rs;
     }
 
+        public ObservableList<Object> selectEntityList(String columnsStr, String tableName)  {
+            ObservableList<Object> newList  = FXCollections.observableArrayList();
+            String query = "SELECT %s FROM %s";
+
+            query = String.format(query, columnsStr, tableName);
+
+            //String sqlString = "SELECT * FROM Room WHERE ? = ?";
+            String sqlString = query;
+
+
+            ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString);
+
+            if (rs == null) {
+                System.out.println(JDBCUtils.error);
+                return null;
+            }
+
+            try {
+                while(rs.next()) {
+                    String className = "com.kyilmaz80.hotel.models." + tableName;
+                    Class<?> clazz = null;
+                    Field[] fields;
+                    Object entity = null;
+                    try {
+                        // Load the class
+                        clazz = Class.forName(className);
+                        entity = clazz.getDeclaredConstructor().newInstance();
+                        fields = clazz.getDeclaredFields();
+                        for (Field field : fields) {
+                            String fieldName = field.getName();
+                            Object value = rs.getObject(fieldName);
+                            String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                            Method setter = clazz.getMethod(setterName, field.getType());
+                            setter.invoke(entity, value);
+                        }
+
+                    } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException |
+                            IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    if (entity != null) {
+                        newList.add(entity);
+                    }
+
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            return newList;
+
+    }
     public ObservableList<Object> selectEntityListFilter(Map<String, String> columnsMap, String tableName) {
         ObservableList<Object> newList  = FXCollections.observableArrayList();
         String query = "SELECT * FROM %s WHERE %s = ?";

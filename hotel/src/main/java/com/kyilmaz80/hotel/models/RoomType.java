@@ -1,39 +1,46 @@
 package com.kyilmaz80.hotel.models;
 
 public class RoomType {
-    private final int roomTypeId;
-    private final String roomTypeName;
+    private int id;
 
-    public RoomType(int roomTypeId, String roomTypeName) {
-        this.roomTypeId = roomTypeId;
-        this.roomTypeName = roomTypeName;
+
+    private String tname;
+
+    public RoomType(int id, String tname) {
+        this.id = id;
+        this.tname = tname;
     }
 
     public RoomType() {
         // add empty room type
-        this.roomTypeId = -1;
-        this.roomTypeName = "";
+        this.id = -1;
+        this.tname = "";
     }
 
-    public int getRoomTypeId() {
-        return roomTypeId;
+
+    public String getTname() {
+        return tname;
+    }
+    public void setTname(String tname) {
+        this.tname = tname;
     }
 
-    public String getRoomTypeName() {
-        return roomTypeName;
-    }
 
     @Override
     public String toString() {
-        if (roomTypeId == -1 && roomTypeName.isEmpty()) {
+        if (id == -1 && tname.isEmpty()) {
             return "";
         } else {
-            return this.getRoomTypeName();
+            return this.getTname();
         }
     }
 
     public int getId() {
-        return roomTypeId;
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 

@@ -69,6 +69,7 @@ public class RoomModel {
         rooms = newList;
     }
 
+    @Deprecated
     public void selectRoomListFilter(String searchCol, String searchString) {
         ObservableList<Room> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT * FROM Room WHERE ? = ?";
@@ -101,7 +102,8 @@ public class RoomModel {
         rooms = (ObservableList<Room>) newList;
     }
 
-    
+
+    @Deprecated
     public void selectRoomTypesList() {
         ObservableList<RoomType> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT id, tname FROM RoomType";
@@ -124,6 +126,12 @@ public class RoomModel {
 
         roomTypes = newList;
 
+    }
+
+    public void selectRoomTypesList2(String columnsStr) {
+        //ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "RoomType");
+        ObservableList<?> newList = new DBUtils().selectEntityList(columnsStr, "RoomType");
+        roomTypes = (ObservableList<RoomType>) newList;
     }
 
 }
