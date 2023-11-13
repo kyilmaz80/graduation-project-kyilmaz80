@@ -1,6 +1,6 @@
 package com.kyilmaz80.hotel;
 
-import com.kyilmaz80.hotel.models.RoomTypes;
+import com.kyilmaz80.hotel.models.RoomType;
 import com.kyilmaz80.hotel.models.Room;
 import com.kyilmaz80.hotel.models.RoomModel;
 import com.kyilmaz80.hotel.utils.StringUtils;
@@ -56,7 +56,7 @@ public class RoomController extends SceneController implements Initializable {
     private TextField roomPriceTextField;
 
     @FXML
-    private ComboBox<RoomTypes> roomTypeComboBox;
+    private ComboBox<RoomType> roomTypeComboBox;
 
     private RoomModel model;
 
@@ -112,7 +112,7 @@ public class RoomController extends SceneController implements Initializable {
         roomTypeComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                var comboObj = (RoomTypes) roomTypeComboBox.getValue();
+                var comboObj = (RoomType) roomTypeComboBox.getValue();
                 System.out.println("On combo selected: " + " id: " +  comboObj.getRoomTypeId()  +
                         " " + roomTypeComboBox.getValue());
                 System.out.println("Are all inputs entered? " + areAllInputsEntered());
@@ -145,10 +145,10 @@ public class RoomController extends SceneController implements Initializable {
         // combo box init
         model.selectRoomTypesList();
         //roomTypeComboBox.getItems().addAll(model.getRoomTypes());
-        ObservableList<RoomTypes> roomTypesObservable = model.getRoomTypes();
+        ObservableList<RoomType> roomTypeObservable = model.getRoomTypes();
         //https://stackoverflow.com/questions/51689888/how-can-i-correctly-add-a-null-item-to-javafxs-combobox
-        roomTypesObservable.add(new RoomTypes()); // add empty room type
-        roomTypeComboBox.setItems(roomTypesObservable);
+        roomTypeObservable.add(new RoomType()); // add empty room type
+        roomTypeComboBox.setItems(roomTypeObservable);
     }
 
     private boolean areAllInputsEntered() {

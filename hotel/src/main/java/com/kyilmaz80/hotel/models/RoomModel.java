@@ -2,7 +2,6 @@ package com.kyilmaz80.hotel.models;
 
 import com.kyilmaz80.hotel.utils.DBUtils;
 import com.kyilmaz80.hotel.utils.JDBCUtils;
-import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,9 +13,9 @@ public class RoomModel {
 
     private ObservableList<Room> rooms;
 
-    private ObservableList<RoomTypes> roomTypes;
+    private ObservableList<RoomType> roomTypes;
 
-    public void setRoomTypes(ObservableList<RoomTypes> roomTypes) {
+    public void setRoomTypes(ObservableList<RoomType> roomTypes) {
         this.roomTypes = roomTypes;
     }
 
@@ -24,7 +23,7 @@ public class RoomModel {
         return rooms;
     }
 
-    public ObservableList<RoomTypes> getRoomTypes() {
+    public ObservableList<RoomType> getRoomTypes() {
         return roomTypes;
     }
 
@@ -104,7 +103,7 @@ public class RoomModel {
 
     
     public void selectRoomTypesList() {
-        ObservableList<RoomTypes> newList  = FXCollections.observableArrayList();
+        ObservableList<RoomType> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT id, tname FROM RoomType";
 
         ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString);
@@ -116,7 +115,7 @@ public class RoomModel {
 
         try {
             while(rs.next()) {
-                newList.add(new RoomTypes(rs.getInt("id"),
+                newList.add(new RoomType(rs.getInt("id"),
                         rs.getString("tname")));
             }
         } catch (SQLException e) {

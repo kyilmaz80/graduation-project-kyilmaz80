@@ -1,15 +1,15 @@
 package com.kyilmaz80.hotel.models;
 
-public class RoomTypes {
-    private int roomTypeId;
-    private String roomTypeName;
+public class RoomType {
+    private final int roomTypeId;
+    private final String roomTypeName;
 
-    public RoomTypes(int roomTypeId, String roomTypeName) {
+    public RoomType(int roomTypeId, String roomTypeName) {
         this.roomTypeId = roomTypeId;
         this.roomTypeName = roomTypeName;
     }
 
-    public RoomTypes() {
+    public RoomType() {
         // add empty room type
         this.roomTypeId = -1;
         this.roomTypeName = "";
