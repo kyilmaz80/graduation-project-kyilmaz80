@@ -4,6 +4,7 @@ import com.kyilmaz80.hotel.models.RoomTypes;
 import com.kyilmaz80.hotel.models.Room;
 import com.kyilmaz80.hotel.models.RoomModel;
 import com.kyilmaz80.hotel.utils.StringUtils;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -90,7 +91,9 @@ public class RoomController extends SceneController implements Initializable {
                 if (roomTypeComboBox.getValue() != null) {
                     int tid = roomTypeComboBox.getValue().getRoomTypeId();
                     System.out.println("room type id: " + tid);
-                    mapColumns.put("tid", String.valueOf(tid));
+                    if (tid != -1) {
+                        mapColumns.put("tid", String.valueOf(tid));
+                    }
                 }
 
 
@@ -142,7 +145,10 @@ public class RoomController extends SceneController implements Initializable {
         // combo box init
         model.selectRoomTypesList();
         //roomTypeComboBox.getItems().addAll(model.getRoomTypes());
-        roomTypeComboBox.setItems(model.getRoomTypes());
+        ObservableList<RoomTypes> roomTypesObservable = model.getRoomTypes();
+        //https://stackoverflow.com/questions/51689888/how-can-i-correctly-add-a-null-item-to-javafxs-combobox
+        roomTypesObservable.add(new RoomTypes()); // add empty room type
+        roomTypeComboBox.setItems(roomTypesObservable);
     }
 
     private boolean areAllInputsEntered() {
