@@ -4,6 +4,7 @@ import com.kyilmaz80.hotel.utils.DBUtils;
 import com.kyilmaz80.hotel.utils.JDBCUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -97,7 +98,7 @@ public class RoomModel {
         rooms = newList;
     }
 
-    public void selectRoomListFilter2(Map<String, String> columnsMap) {
+    public void selectRoomListFilter2(Map<String, Pair<String,String>> columnsMap) {
         ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "Room");
         rooms = (ObservableList<Room>) newList;
     }

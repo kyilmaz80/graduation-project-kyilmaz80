@@ -4,6 +4,7 @@ import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.models.RoomType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -42,7 +44,7 @@ public class DBUtils {
 
     }
 
-    public static void executeStatement(String sqlString, String col1, Double col2 ) {
+    public static void executeStatement(String sqlString, String col1, Double col2) {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
@@ -132,14 +134,16 @@ public class DBUtils {
             }
 
             PreparedStatement ps = connection.prepareStatement(sqlString);
+            System.out.println("Query in resultset: " + sqlString);
 
             int parameterIndex = 1;
+
             for (Map.Entry<String, String> entry : criteria.entrySet()) {
                 if (parameterIndex == 1) {
                     System.out.println("setting param " + parameterIndex + " " + entry.getValue());
                     ps.setObject(parameterIndex++, entry.getValue());
                 } else {
-                    System.out.println("setting param " + parameterIndex + " " +  entry.getValue());
+                    System.out.println("setting param " + parameterIndex + " " + entry.getValue());
                     ps.setObject(parameterIndex++, entry.getValue());
                 }
             }
@@ -151,7 +155,6 @@ public class DBUtils {
         }
         return rs;
     }
-
 
     public ResultSet getSelectResultSetFromTable(String sqlString) {
         Connection connection = null;
@@ -174,90 +177,17 @@ public class DBUtils {
         return rs;
     }
 
-        public ObservableList<Object> selectEntityList(String columnsStr, String tableName)  {
-            ObservableList<Object> newList  = FXCollections.observableArrayList();
-            String query = "SELECT %s FROM %s";
+    public ObservableList<Object> selectEntityList(String columnsStr, String tableName) {
+        ObservableList<Object> newList = FXCollections.observableArrayList();
+        String query = "SELECT %s FROM %s";
 
-            query = String.format(query, columnsStr, tableName);
-
-            //String sqlString = "SELECT * FROM Room WHERE ? = ?";
-            String sqlString = query;
-
-
-            ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString);
-
-            if (rs == null) {
-                System.out.println(JDBCUtils.error);
-                return null;
-            }
-
-            try {
-                while(rs.next()) {
-                    String className = "com.kyilmaz80.hotel.models." + tableName;
-                    Class<?> clazz = null;
-                    Field[] fields;
-                    Object entity = null;
-                    try {
-                        // Load the class
-                        clazz = Class.forName(className);
-                        entity = clazz.getDeclaredConstructor().newInstance();
-                        fields = clazz.getDeclaredFields();
-                        for (Field field : fields) {
-                            String fieldName = field.getName();
-                            Object value = rs.getObject(fieldName);
-                            String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                            Method setter = clazz.getMethod(setterName, field.getType());
-                            setter.invoke(entity, value);
-                        }
-
-                    } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException |
-                            IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    if (entity != null) {
-                        newList.add(entity);
-                    }
-
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            return newList;
-
-    }
-    public ObservableList<Object> selectEntityListFilter(Map<String, String> columnsMap, String tableName) {
-        ObservableList<Object> newList  = FXCollections.observableArrayList();
-        String query = "SELECT * FROM %s WHERE %s = ?";
-
-        int i = 0;
-        for (Map.Entry<String, String> entry : columnsMap.entrySet()) {
-            if (i == 0) {
-                query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()));
-            }else {
-                StringBuilder sb = new StringBuilder(query);
-                query = sb.append(" and %s = ?").toString();
-                query = String.format(query, StringUtils.filterStr(entry.getKey()));
-            }
-            i++;
-        }
+        query = String.format(query, columnsStr, tableName);
 
         //String sqlString = "SELECT * FROM Room WHERE ? = ?";
         String sqlString = query;
 
-        /*
-        https://stackoverflow.com/questions/3135973/variable-column-names-using-prepared-statements
-        This indicates a bad DB design. The user shouldn't need to know about the column names. Create
-        a real DB column which holds those "column names" and store the data along it instead.
-        And any way, no, you cannot set column names as PreparedStatement values. You can only set
-        column values as PreparedStatement values
-        If you'd like to continue in this direction, you need to sanitize the column names (to avoid SQL Injection)
-        and concatenate/build the SQL string yourself. Quote the separate column names and use String#replace() to
-        escape the same quote inside the column name.
-         */
 
-        ResultSet rs = getSelectResultSetFromTable(sqlString, columnsMap);
-        ResultSetMetaData rsmetadata;
+        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString);
 
         if (rs == null) {
             System.out.println(JDBCUtils.error);
@@ -265,7 +195,7 @@ public class DBUtils {
         }
 
         try {
-            while(rs.next()) {
+            while (rs.next()) {
                 String className = "com.kyilmaz80.hotel.models." + tableName;
                 Class<?> clazz = null;
                 Field[] fields;
@@ -283,8 +213,135 @@ public class DBUtils {
                         setter.invoke(entity, value);
                     }
 
-                } catch(ClassNotFoundException | NoSuchMethodException | InstantiationException |
-                       IllegalAccessException | InvocationTargetException e) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+                         IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                if (entity != null) {
+                    newList.add(entity);
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return newList;
+
+    }
+
+    /*
+    Pair<String, String> columnInfo = entry.getValue();
+    String columnValue = columnInfo.getLeft();
+    String operator = columnInfo.getRight().equals("LIKE") ? "LIKE" : defaultOperator;
+
+    if (i == 0) {
+        query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator);
+    } else {
+        StringBuilder sb = new StringBuilder(query);
+        query = sb.append(" AND %s %s ?").toString();
+        query = String.format(query, StringUtils.filterStr(entry.getKey()), operator);
+    }
+    i++;
+     */
+
+    public ObservableList<Object> selectEntityListFilter(Map<String, Pair<String, String>> columnsMap, String tableName) {
+        ObservableList<Object> newList = FXCollections.observableArrayList();
+        //String query = "SELECT * FROM %s WHERE %s %s ?";
+        String query = "SELECT * FROM %s WHERE %s %s %s";
+        String defaultOperator = " = ";
+
+
+        Map<String, String> columnsMap2 = new HashMap<>();
+        int i = 0;
+        for (Map.Entry<String, Pair<String, String>> entry : columnsMap.entrySet()) {
+            Pair<String, String> columnInfo = entry.getValue();
+            String columnValue = columnInfo.getKey();
+            String operator = columnInfo.getValue().equals("LIKE") ? " LIKE " : defaultOperator;
+            columnsMap2.put(entry.getKey(), columnValue);
+
+            // Use different placeholders for LIKE operator
+            String placeholder = columnInfo.getValue().equals("LIKE") ? "CONCAT('%', ?, '%')": "?";
+
+            if (i == 0) {
+                query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator, placeholder);
+            } else {
+                // Use AND directly in the format string
+                query = String.format("%s AND %s %s %s", query, StringUtils.filterStr(entry.getKey()), operator, placeholder);
+            }
+            i++;
+            /*
+            Pair<String, String> columnInfo = entry.getValue();
+            String columnValue = columnInfo.getKey();
+            String operator = columnInfo.getValue().equals("LIKE") ? " LIKE " : defaultOperator;
+            columnsMap2.put(entry.getKey(), columnValue);
+            // Use different placeholders for LIKE operator
+            String placeholder = columnInfo.getValue().equals("LIKE") ? "'%' || ? || '%'" : "?";
+            System.out.println("placeholder: " + placeholder);
+
+            System.out.println("QUERY: "+ query);
+
+            if (i == 0) {
+                //query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()));
+                //query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator);
+                query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator, placeholder);
+            } else {
+                StringBuilder sb = new StringBuilder(query);
+                //query = sb.append(" and %s = ?").toString();
+                //query = String.format(query, StringUtils.filterStr(entry.getKey()));
+                //query = sb.append(" AND %s %s ?").toString();
+                sb.append(" AND %s %s ").append(placeholder);
+                query = String.format(sb.toString(), StringUtils.filterStr(entry.getKey()), operator);
+            }
+            i++;
+
+             */
+        }
+
+        //String sqlString = "SELECT * FROM Room WHERE ? = ?";
+        String sqlString = query;
+        System.out.println("QUERY: "+ query);
+
+        /*
+        https://stackoverflow.com/questions/3135973/variable-column-names-using-prepared-statements
+        This indicates a bad DB design. The user shouldn't need to know about the column names. Create
+        a real DB column which holds those "column names" and store the data along it instead.
+        And any way, no, you cannot set column names as PreparedStatement values. You can only set
+        column values as PreparedStatement values
+        If you'd like to continue in this direction, you need to sanitize the column names (to avoid SQL Injection)
+        and concatenate/build the SQL string yourself. Quote the separate column names and use String#replace() to
+        escape the same quote inside the column name.
+         */
+
+        ResultSet rs = getSelectResultSetFromTable(sqlString, columnsMap2);
+        ResultSetMetaData rsmetadata;
+
+        if (rs == null) {
+            System.out.println(JDBCUtils.error);
+            return null;
+        }
+
+        try {
+            while (rs.next()) {
+                String className = "com.kyilmaz80.hotel.models." + tableName;
+                Class<?> clazz = null;
+                Field[] fields;
+                Object entity = null;
+                try {
+                    // Load the class
+                    clazz = Class.forName(className);
+                    entity = clazz.getDeclaredConstructor().newInstance();
+                    fields = clazz.getDeclaredFields();
+                    for (Field field : fields) {
+                        String fieldName = field.getName();
+                        Object value = rs.getObject(fieldName);
+                        String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                        Method setter = clazz.getMethod(setterName, field.getType());
+                        setter.invoke(entity, value);
+                    }
+
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+                         IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
                 if (entity != null) {
@@ -300,7 +357,6 @@ public class DBUtils {
         //rooms = newList;
         return newList;
     }
-
 
 
     //TODO: FUTURE USE SQL DB INIT

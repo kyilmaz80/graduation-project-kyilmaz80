@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Pair;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -67,36 +68,40 @@ public class RoomController extends SceneController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Map<String,String> roomMapColumns = new HashMap<String,String>();
+                Map<String, Pair<String,String>> roomMapColumns = new HashMap<>();
 
+
+                //TODO:
+                //hepsi secildiğinde room'da
+                //Exception in thread "JavaFX Application Thread" java.util.UnknownFormatConversionException: Conversion = '''
                 if (!validateInputs()) {
                     System.out.println("Inputs not valid!");
                     return;
                 }
 
-
                 if (!roomNameTextField.getText().isEmpty()) {
-                    roomMapColumns.put("name", roomNameTextField.getText());
+                    roomMapColumns.put("name", new Pair<String,String>(roomNameTextField.getText(), "LIKE"));
+                    //roomMapColumns.put("name", roomNameTextField.getText());
                 }
 
                 if (!roomPriceTextField.getText().isEmpty()) {
-                    roomMapColumns.put("price", roomPriceTextField.getText());
+                    roomMapColumns.put("price", new Pair<String,String>(roomPriceTextField.getText(), "="));
+                    //roomMapColumns.put("price", roomPriceTextField.getText());
                 }
 
                 if (!roomCapacityTextField.getText().isEmpty()) {
-                    roomMapColumns.put("capacity", roomCapacityTextField.getText());
+                    roomMapColumns.put("capacity", new Pair<String,String>(roomCapacityTextField.getText(), "="));
+                    //roomMapColumns.put("capacity", roomCapacityTextField.getText());
                 }
-
 
                 if (roomTypeComboBox.getValue() != null) {
                     int tid = roomTypeComboBox.getValue().getId();
                     System.out.println("room type id: " + tid);
                     if (tid != -1) {
-                        roomMapColumns.put("tid", String.valueOf(tid));
+                        //roomMapColumns.put("tid", String.valueOf(tid));
+                        roomMapColumns.put("tid", new Pair<String,String>(String.valueOf(tid), "="));
                     }
                 }
-
-
 
                 if (roomMapColumns.isEmpty()) {
                     model.selectRoomListLike(roomNameTextField.getText());
