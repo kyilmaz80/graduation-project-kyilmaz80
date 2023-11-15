@@ -3,7 +3,6 @@ package com.kyilmaz80.hotel.models;
 import java.math.BigDecimal;
 
 public class Room {
-    // mapping -> view_room view
     private int id;
     private int capacity;
     private BigDecimal price;
