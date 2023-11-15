@@ -1,7 +1,6 @@
 package com.kyilmaz80.hotel.utils;
 
 import com.kyilmaz80.hotel.ViewUtils;
-import com.kyilmaz80.hotel.models.RoomType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -9,7 +8,6 @@ import javafx.util.Pair;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.invoke.StringConcatFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,15 +24,14 @@ public class DBUtils {
     private static final Pattern COMMENT_PATTERN = Pattern.compile("–.*|/\\*(.|[\\r\\n])*?\\*/");
 
     public static void executeStatement(String sqlString, String name) {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
                 ViewUtils.showAlert("DB connection problem!");
                 return;
             }
-            String updateString = sqlString;
-            PreparedStatement ps = connection.prepareStatement(updateString);
+            PreparedStatement ps = connection.prepareStatement(sqlString);
             ps.setString(1, name);
             ps.execute();
             connection.close();
@@ -45,17 +42,16 @@ public class DBUtils {
     }
 
     public static void executeStatement(String sqlString, String col1, Double col2) {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
                 ViewUtils.showAlert("DB connection problem!");
                 return;
             }
-            String updateString = sqlString;
-            PreparedStatement ps = connection.prepareStatement(updateString);
+            PreparedStatement ps = connection.prepareStatement(sqlString);
             ps.setString(1, col1);
-            ps.setDouble(2, col2.doubleValue());
+            ps.setDouble(2, col2);
             ps.execute();
             connection.close();
         } catch (SQLException e) {
@@ -72,8 +68,7 @@ public class DBUtils {
                 ViewUtils.showAlert("DB connection problem!");
                 return;
             }
-            String updateString = sqlString;
-            PreparedStatement ps = connection.prepareStatement(updateString);
+            PreparedStatement ps = connection.prepareStatement(sqlString);
             ps.setInt(1, id);
             ps.execute();
             connection.close();
@@ -83,8 +78,8 @@ public class DBUtils {
     }
 
     public ResultSet getSelectResultSetFromTable(String sqlString, String searchString) {
-        Connection connection = null;
-        ResultSet rs = null;
+        Connection connection;
+        ResultSet rs;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
@@ -103,8 +98,8 @@ public class DBUtils {
     }
 
     public ResultSet getSelectResultSetFromTable(String sqlString, String searchString, String filterColumn) {
-        Connection connection = null;
-        ResultSet rs = null;
+        Connection connection;
+        ResultSet rs;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
@@ -124,8 +119,8 @@ public class DBUtils {
     }
 
     public ResultSet getSelectResultSetFromTable(String sqlString, Map<String, String> criteria) {
-        Connection connection = null;
-        ResultSet rs = null;
+        Connection connection;
+        ResultSet rs;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
@@ -157,8 +152,8 @@ public class DBUtils {
     }
 
     public ResultSet getSelectResultSetFromTable(String sqlString) {
-        Connection connection = null;
-        ResultSet rs = null;
+        Connection connection;
+        ResultSet rs;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
@@ -197,7 +192,7 @@ public class DBUtils {
         try {
             while (rs.next()) {
                 String className = "com.kyilmaz80.hotel.models." + tableName;
-                Class<?> clazz = null;
+                Class<?> clazz;
                 Field[] fields;
                 Object entity = null;
                 try {
@@ -230,27 +225,12 @@ public class DBUtils {
 
     }
 
-    /*
-    Pair<String, String> columnInfo = entry.getValue();
-    String columnValue = columnInfo.getLeft();
-    String operator = columnInfo.getRight().equals("LIKE") ? "LIKE" : defaultOperator;
-
-    if (i == 0) {
-        query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator);
-    } else {
-        StringBuilder sb = new StringBuilder(query);
-        query = sb.append(" AND %s %s ?").toString();
-        query = String.format(query, StringUtils.filterStr(entry.getKey()), operator);
-    }
-    i++;
-     */
 
     public ObservableList<Object> selectEntityListFilter(Map<String, Pair<String, String>> columnsMap, String tableName) {
         ObservableList<Object> newList = FXCollections.observableArrayList();
         //String query = "SELECT * FROM %s WHERE %s %s ?";
         String query = "SELECT * FROM %s WHERE %s %s %s";
         String defaultOperator = " = ";
-
 
         Map<String, String> columnsMap2 = new HashMap<>();
         int i = 0;
@@ -270,32 +250,7 @@ public class DBUtils {
                 query = String.format("%s AND %s %s %s", query, StringUtils.filterStr(entry.getKey()), operator, placeholder);
             }
             i++;
-            /*
-            Pair<String, String> columnInfo = entry.getValue();
-            String columnValue = columnInfo.getKey();
-            String operator = columnInfo.getValue().equals("LIKE") ? " LIKE " : defaultOperator;
-            columnsMap2.put(entry.getKey(), columnValue);
-            // Use different placeholders for LIKE operator
-            String placeholder = columnInfo.getValue().equals("LIKE") ? "'%' || ? || '%'" : "?";
-            System.out.println("placeholder: " + placeholder);
 
-            System.out.println("QUERY: "+ query);
-
-            if (i == 0) {
-                //query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()));
-                //query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator);
-                query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator, placeholder);
-            } else {
-                StringBuilder sb = new StringBuilder(query);
-                //query = sb.append(" and %s = ?").toString();
-                //query = String.format(query, StringUtils.filterStr(entry.getKey()));
-                //query = sb.append(" AND %s %s ?").toString();
-                sb.append(" AND %s %s ").append(placeholder);
-                query = String.format(sb.toString(), StringUtils.filterStr(entry.getKey()), operator);
-            }
-            i++;
-
-             */
         }
 
         //String sqlString = "SELECT * FROM Room WHERE ? = ?";
@@ -314,7 +269,6 @@ public class DBUtils {
          */
 
         ResultSet rs = getSelectResultSetFromTable(sqlString, columnsMap2);
-        ResultSetMetaData rsmetadata;
 
         if (rs == null) {
             System.out.println(JDBCUtils.error);
