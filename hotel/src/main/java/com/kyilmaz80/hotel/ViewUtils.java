@@ -1,5 +1,6 @@
 package com.kyilmaz80.hotel;
 
+import com.kyilmaz80.hotel.controllers.SceneController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;

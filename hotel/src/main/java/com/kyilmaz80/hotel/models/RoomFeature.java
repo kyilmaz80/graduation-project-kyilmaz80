@@ -1,5 +1,7 @@
 package com.kyilmaz80.hotel.models;
 
+import java.math.BigDecimal;
+
 public class RoomFeature {
     private int id;
     private int room_id;
@@ -38,5 +40,11 @@ public class RoomFeature {
         this.id = id;
         this.room_id = room_id;
         this.feature_id = feature_id;
+    }
+
+    public RoomFeature() {
+        this.id = -1;
+        this.room_id = -1;
+        this.feature_id = -1;
     }
 }

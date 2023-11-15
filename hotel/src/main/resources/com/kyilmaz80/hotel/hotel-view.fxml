@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.HotelController">
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.HotelController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="79.0" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #8fbc8f;" AnchorPane.bottomAnchor="659.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -12,6 +13,10 @@
                   <Font name="JetBrains Mono NL Bold" size="14.0" />
                </font></Label>
             <Label fx:id="featuresLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="Features">
+               <font>
+                  <Font name="JetBrains Mono NL Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="room_featuresLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="RoomFeatures">
                <font>
                   <Font name="JetBrains Mono NL Bold" size="14.0" />
                </font></Label>

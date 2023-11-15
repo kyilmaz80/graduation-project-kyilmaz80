@@ -7,18 +7,18 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-public class FeaturesModel {
-    private ObservableList<Features> features;
+public class FeatureModel {
+    private ObservableList<Feature> features;
 
-    public ObservableList<Features> getFeatures() {
+    public ObservableList<Feature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(ObservableList<Features> features) {
+    public void setFeatures(ObservableList<Feature> features) {
         this.features = features;
     }
 
-    public FeaturesModel() {
+    public FeatureModel() {
         features = FXCollections.observableArrayList();
         //features.add(new Features("TV"));
     }
@@ -28,7 +28,7 @@ public class FeaturesModel {
     }
 
     public void selectFeatureListLike(String searchString) {
-        ObservableList<Features> newList  = FXCollections.observableArrayList();
+        ObservableList<Feature> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT * FROM Feature WHERE name LIKE ?";
 
         ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, searchString);
@@ -40,7 +40,7 @@ public class FeaturesModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Features(rs.getInt("id"),
+                newList.add(new Feature(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price")));
             }
@@ -53,7 +53,7 @@ public class FeaturesModel {
     }
 
     public void selectFeatureListLikeFilter(String searchString, String filterPrice) {
-        ObservableList<Features> newList  = FXCollections.observableArrayList();
+        ObservableList<Feature> newList  = FXCollections.observableArrayList();
         String sqlString = "SELECT * FROM Feature WHERE name LIKE ? and price = ? ";
         // SELECT * FROM upod_otel.Feature WHERE name like "%man%" and price = price;
         // SELECT * FROM upod_otel.Feature WHERE name like "%man%";
@@ -69,7 +69,7 @@ public class FeaturesModel {
 
         try {
             while(rs.next()) {
-                newList.add(new Features(rs.getInt("id"),
+                newList.add(new Feature(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price")));
             }

@@ -4,16 +4,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.RoomFeatureController">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.RoomFeatureController">
    <children>
        <SplitPane dividerPositions="0.40257879656160456" layoutX="273.0" layoutY="111.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
+                   <ToolBar layoutX="172.0" layoutY="6.0" prefHeight="42.0" prefWidth="898.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                       <items>
+                           <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
+                       </items>
+                   </ToolBar>
                   <Label layoutX="341.0" layoutY="73.0" text="Add Room Features">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
+                  <Button fx:id="addButton" layoutX="322.0" layoutY="146.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-border-color: #008000;" text="Add" />
+                  <AnchorPane layoutX="-1.0" layoutY="236.0" prefHeight="42.0" prefWidth="898.0" style="-fx-border-color: #008000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="236.0">
+                     <children>
+                        <Label layoutX="129.0" layoutY="12.0" text="Room">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="467.0" layoutY="11.0" text="Feature">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="734.0" layoutY="11.0" text="Room Feature" />
+                     </children></AnchorPane>
+                  <Button fx:id="deleteButton" layoutX="449.0" layoutY="146.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-border-color: #008000;" text="Delete" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -21,25 +42,25 @@
                      <children>
                         <TableView fx:id="roomTableView" prefHeight="414.0" prefWidth="440.0">
                           <columns>
-                            <TableColumn prefWidth="65.0" text="ID" />
-                            <TableColumn prefWidth="85.0" text="Name" />
-                              <TableColumn prefWidth="70.0" text="Capacity" />
-                              <TableColumn prefWidth="90.0" text="Price" />
-                              <TableColumn prefWidth="65.0" text="TypeId" />
+                            <TableColumn fx:id="roomId" prefWidth="65.0" text="ID" />
+                            <TableColumn fx:id="roomName" prefWidth="85.0" text="Name" />
+                              <TableColumn fx:id="roomCapacity" prefWidth="70.0" text="Capacity" />
+                              <TableColumn fx:id="roomPrice" prefWidth="90.0" text="Price" />
+                              <TableColumn fx:id="roomTypeId" prefWidth="65.0" text="TypeId" />
                           </columns>
                         </TableView>
                         <TableView fx:id="featureTableView" prefHeight="414.0" prefWidth="309.0">
                           <columns>
-                            <TableColumn prefWidth="54.0" text="ID" />
-                            <TableColumn prefWidth="121.0" text="Name" />
-                              <TableColumn prefWidth="71.0" text="Price" />
+                            <TableColumn fx:id="featureId" prefWidth="54.0" text="ID" />
+                            <TableColumn fx:id="featureName" prefWidth="121.0" text="Name" />
+                              <TableColumn fx:id="featurePrice" prefWidth="71.0" text="Price" />
                           </columns>
                         </TableView>
                         <TableView fx:id="roomFeatureTableView" prefHeight="414.0" prefWidth="326.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="81.0" text="RoomId" />
-                              <TableColumn prefWidth="91.0" text="FeatureId" />
+                            <TableColumn fx:id="roomFeatureId" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="roomFeatureRoomId" prefWidth="81.0" text="RoomId" />
+                              <TableColumn fx:id="roomFeatureFeatureId" prefWidth="91.0" text="FeatureId" />
                           </columns>
                         </TableView>
                      </children>

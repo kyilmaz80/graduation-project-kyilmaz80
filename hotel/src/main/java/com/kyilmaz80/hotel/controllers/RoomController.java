@@ -1,5 +1,6 @@
-package com.kyilmaz80.hotel;
+package com.kyilmaz80.hotel.controllers;
 
+import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.models.RoomType;
 import com.kyilmaz80.hotel.models.Room;
 import com.kyilmaz80.hotel.models.RoomModel;
@@ -160,7 +161,7 @@ public class RoomController extends SceneController implements Initializable {
                 System.out.println("On click Delete");
                 var selected = roomTableView.getSelectionModel().getSelectedItem();
                 if (selected == null) {
-                    ViewUtils.showAlert("No item selected!");
+                    ViewUtils.showAlert("No RoomFeature item selected!");
                     return;
                 }
                 System.out.println("selected: " + selected);

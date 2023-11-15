@@ -139,6 +139,7 @@ public class RoomModel {
     }
 
     public void insertRoom(Map<String,String> roomInsertMap) {
+        // column names must be sorted
         String sqlString = "INSERT INTO Room (capacity, name, price, tid) VALUES(?,?,?,?)";
         try {
             DBUtils.executeStatement(sqlString, roomInsertMap);

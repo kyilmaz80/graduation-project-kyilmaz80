@@ -9,4 +9,6 @@ module com.kyilmaz80.hotel {
     opens com.kyilmaz80.hotel.utils to javafx.fxml;
     exports com.kyilmaz80.hotel.models;
     opens com.kyilmaz80.hotel.models to javafx.fxml;
+    exports com.kyilmaz80.hotel.controllers;
+    opens com.kyilmaz80.hotel.controllers to javafx.fxml;
 }

@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `upod_otel`.`ReservationCustomer` (
   INDEX `fk_ReservationCustomer_1_idx` (`reservation_id` ASC) VISIBLE,
   INDEX `fk_ReservationCustomer_2_idx` (`customer_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `reservation_customer_uniq_id` (`reservation_id`, `customer_id`),
   CONSTRAINT `fk_ReservationCustomer_1`
     FOREIGN KEY (`reservation_id`)
     REFERENCES `upod_otel`.`Reservation` (`id`)
@@ -180,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `upod_otel`.`RoomFeature` (
   INDEX `fk_RoomFeature_1_idx` (`room_id` ASC) VISIBLE,
   INDEX `fk_RoomFeature_2_idx` (`feature_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `room_feature_uniq_id` (`room_id`, `feature_id`),
   CONSTRAINT `fk_RoomFeature_1`
     FOREIGN KEY (`room_id`)
     REFERENCES `upod_otel`.`Room` (`id`)

@@ -1,5 +1,7 @@
-package com.kyilmaz80.hotel;
+package com.kyilmaz80.hotel.controllers;
 
+import com.kyilmaz80.hotel.DomainConstants;
+import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;

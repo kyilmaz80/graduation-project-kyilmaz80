@@ -1,5 +1,6 @@
-package com.kyilmaz80.hotel;
+package com.kyilmaz80.hotel.controllers;
 
+import com.kyilmaz80.hotel.DomainConstants;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
