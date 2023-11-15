@@ -1,13 +1,16 @@
 package com.kyilmaz80.hotel.models;
 
+import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.utils.DBUtils;
 import com.kyilmaz80.hotel.utils.JDBCUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class RoomModel {
@@ -133,6 +136,21 @@ public class RoomModel {
         //ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "RoomType");
         ObservableList<?> newList = new DBUtils().selectEntityList(columnsStr, "RoomType");
         roomTypes = (ObservableList<RoomType>) newList;
+    }
+
+    public void insertRoom(Map<String,String> roomInsertMap) {
+        String sqlString = "INSERT INTO Room (capacity, name, price, tid) VALUES(?,?,?,?)";
+        try {
+            DBUtils.executeStatement(sqlString, roomInsertMap);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            ViewUtils.showAlert(e.getMessage());
+        }
+    }
+
+    public void deleteRoom(int id) {
+        String sqlString = "DELETE FROM Room WHERE id = ?";
+        DBUtils.executeStatement(sqlString, id);
     }
 
 }

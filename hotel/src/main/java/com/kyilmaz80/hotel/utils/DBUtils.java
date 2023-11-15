@@ -61,7 +61,7 @@ public class DBUtils {
     }
 
     public static void executeStatement(String sqlString, int id) {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = JDBCUtils.getConnection();
             if (connection == null) {
@@ -76,6 +76,30 @@ public class DBUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static void executeStatement(String sqlString, Map<String,String> columnsMap ) {
+        Connection connection;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB connection problem!");
+                return;
+            }
+            PreparedStatement ps = connection.prepareStatement(sqlString);
+            // ps.setInt(1, id);
+            int parameterIndex = 1;
+            for(Map.Entry<String,String> entry : columnsMap.entrySet() ) {
+                System.out.println( "entry.getKey: " +  entry.getKey() + " entry.getValue() : " + entry.getValue());
+                ps.setObject(parameterIndex++, entry.getValue());
+            }
+
+            ps.execute();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public ResultSet getSelectResultSetFromTable(String sqlString, String searchString) {
         Connection connection;
@@ -232,6 +256,7 @@ public class DBUtils {
         String query = "SELECT * FROM %s WHERE %s %s %s";
         String defaultOperator = " = ";
 
+        // <column_name, column_value>
         Map<String, String> columnsMap2 = new HashMap<>();
         int i = 0;
         for (Map.Entry<String, Pair<String, String>> entry : columnsMap.entrySet()) {

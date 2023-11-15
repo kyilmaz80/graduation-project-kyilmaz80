@@ -15,9 +15,7 @@ import javafx.util.Pair;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class RoomController extends SceneController implements Initializable {
     @FXML
@@ -123,6 +121,8 @@ public class RoomController extends SceneController implements Initializable {
                 System.out.println("Are all inputs entered? " + areAllInputsEntered());
                 if(areAllInputsEntered()) {
                     addButton.setDisable(false);
+                } else {
+                    addButton.setDisable(true);
                 }
             }
 
@@ -131,7 +131,47 @@ public class RoomController extends SceneController implements Initializable {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if (!validateInputs()) {
+                    System.out.println("Inputs not valid!");
+                    return;
+                }
+                Map<String, String> roomInsertMap = new TreeMap<>();
+                String roomName = roomNameTextField.getText();
+                String capacity = roomCapacityTextField.getText();
+                String price = roomPriceTextField.getText();
+                String tid = String.valueOf(roomTypeComboBox.getValue().getId());
+
                 System.out.println("On add button");
+
+                roomInsertMap.put("name", roomName);
+                roomInsertMap.put("capacity", capacity);
+                roomInsertMap.put("price", price);
+                roomInsertMap.put("tid", tid);
+
+                model.insertRoom(roomInsertMap);
+                model.selectAllRooms();
+                roomTableView.setItems(model.getRooms());
+            }
+        });
+
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("On click Delete");
+                var selected = roomTableView.getSelectionModel().getSelectedItem();
+                if (selected == null) {
+                    ViewUtils.showAlert("No item selected!");
+                    return;
+                }
+                System.out.println("selected: " + selected);
+                var selectedId = selected.getId();
+                System.out.println("Deleting id " + selectedId);
+
+                model.deleteRoom(selectedId);
+                model.selectAllRooms();
+                roomTableView.setItems(model.getRooms());
+
+
             }
         });
 
