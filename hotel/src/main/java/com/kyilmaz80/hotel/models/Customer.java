@@ -1,12 +1,11 @@
 package com.kyilmaz80.hotel.models;
 
-import java.math.BigInteger;
 import java.sql.Date;
 
 public class Customer {
     private int id;
     private String full_name;
-    private BigInteger identity_number;
+    private String identity_number;
     private String phone_number;
     private Date birth_date;
     private String description;
@@ -27,11 +26,11 @@ public class Customer {
         this.full_name = full_name;
     }
 
-    public BigInteger getIdentity_number() {
+    public String getIdentity_number() {
         return identity_number;
     }
 
-    public void setIdentity_number(BigInteger identity_number) {
+    public void setIdentity_number(String identity_number) {
         this.identity_number = identity_number;
     }
 
@@ -59,7 +58,7 @@ public class Customer {
         this.description = description;
     }
 
-    public Customer(int id, String full_name, BigInteger identity_number, String phone_number,
+    public Customer(int id, String full_name, String identity_number, String phone_number,
                     Date birth_date, String description) {
         this.id = id;
         this.full_name = full_name;
@@ -69,17 +68,17 @@ public class Customer {
         this.description = description;
     }
 
-    public Customer(String full_name, BigInteger identity_number) {
+    public Customer(String full_name, String identity_number) {
         this.full_name = full_name;
         this.identity_number = identity_number;
     }
 
     public Customer() {
         this.id = 0;
-        this.full_name = "Person";
-        this.identity_number = BigInteger.valueOf(Long.parseLong("11111111111"));
+        this.full_name = "Zero";
+        this.identity_number = "11111111111";
         this.phone_number = "1111111111";
-        this.birth_date = Date.valueOf("1/1/1970");
+        this.birth_date = Date.valueOf("1970-01-01");
         this.description = "Test";
     }
 }

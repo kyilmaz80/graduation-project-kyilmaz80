@@ -1,7 +1,5 @@
 package com.kyilmaz80.hotel.models;
 
-import java.math.BigDecimal;
-
 public class RoomFeature {
     private int id;
     private int room_id;

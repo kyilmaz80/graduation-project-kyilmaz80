@@ -27,7 +27,7 @@ USE `upod_otel` ;
 CREATE TABLE IF NOT EXISTS `upod_otel`.`Customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `full_name` VARCHAR(100) NOT NULL,
-  `identity_number` BIGINT NOT NULL,
+  `identity_number` VARCHAR(11) NOT NULL,
   `phone_number` VARCHAR(15) NULL DEFAULT NULL,
   `birth_date` DATE NULL DEFAULT NULL,
   `description` VARCHAR(250) NULL DEFAULT NULL,

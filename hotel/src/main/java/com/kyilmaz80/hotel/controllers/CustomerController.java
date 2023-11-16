@@ -8,7 +8,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -25,7 +24,7 @@ public class CustomerController extends SceneController implements Initializable
     private TableColumn<Customer, String> customerFullName;
 
     @FXML
-    private TableColumn<Customer, BigInteger> customerIdentityNumber;
+    private TableColumn<Customer, String> customerIdentityNumber;
 
     @FXML
     private TableColumn<Customer, String> customerPhoneNumber;
@@ -45,10 +44,10 @@ public class CustomerController extends SceneController implements Initializable
 
         customerId.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
         customerFullName.setCellValueFactory(new PropertyValueFactory<Customer, String>("full_name"));
-        customerIdentityNumber.setCellValueFactory(new PropertyValueFactory<Customer, BigInteger>("identity_number"));
+        customerIdentityNumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("identity_number"));
         customerPhoneNumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone_number"));
         customerBirthDate.setCellValueFactory(new PropertyValueFactory<Customer, Date>("birth_date"));
-        customerDescription.setCellValueFactory(new PropertyValueFactory<Customer, String>("detail"));
+        customerDescription.setCellValueFactory(new PropertyValueFactory<Customer, String>("description"));
 
         model = new CustomerModel();
         // table view init
