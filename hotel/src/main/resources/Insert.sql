@@ -31,3 +31,7 @@ INSERT INTO Room (name, capacity, price, room_type_id) VALUES("Suit-Oda-001", 1,
 INSERT INTO Room (name, capacity, price, room_type_id) VALUES("Suit-Oda-002", 1, 1800, 3);
 INSERT INTO Room (name, capacity, price, room_type_id) VALUES("Suit-Oda-003", 1, 1800, 3);
 INSERT INTO Room (name, capacity, price, room_type_id) VALUES("Suit-Oda-004", 2, 1900, 3);
+
+INSERT INTO Service(name) VALUES("In-room Dining");
+INSERT INTO Service(name) VALUES("SPA");
+

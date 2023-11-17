@@ -25,14 +25,18 @@
                   <Button fx:id="filterButton" layoutX="260.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Filter" />
                   <Button fx:id="deleteButton" layoutX="509.0" layoutY="182.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
                   <TextField fx:id="featurePriceTextField" layoutX="454.0" layoutY="129.0" prefHeight="33.0" prefWidth="143.0" promptText="Price" />
+                  <Label layoutX="637.0" layoutY="138.0" text="Price = 0 (Free Room Feature)">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                     </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
                     <children>
                         <TableView fx:id="featureTableView" editable="true" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="featureId" prefWidth="75.0" text="ID" />
-                                <TableColumn fx:id="featureName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="featurePrice" prefWidth="75.0" text="Price" />
+                                <TableColumn fx:id="featureName" prefWidth="129.0" text="Name" />
+                        <TableColumn fx:id="featurePrice" prefWidth="222.0" text="Price" />
                             </columns>
                         </TableView>
                     </children>
