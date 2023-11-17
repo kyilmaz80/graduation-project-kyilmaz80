@@ -42,4 +42,9 @@ public class CustomerModel {
             ViewUtils.showAlert(e.getMessage());
         }
     }
+
+    public void deleteCustomer(int id) {
+        String sqlString = "DELETE FROM Customer WHERE id = ?";
+        DBUtils.executeStatement(sqlString, id);
+    }
 }

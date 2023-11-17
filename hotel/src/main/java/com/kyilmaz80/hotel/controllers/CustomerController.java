@@ -109,10 +109,15 @@ public class CustomerController extends SceneController implements Initializable
                 System.out.println(customerBirth);
                 System.out.println(customerDesc);
 
+                customerInsertMap.put("birth_date", customerBirth.toString());
+                customerInsertMap.put("description", customerDesc);
+                customerInsertMap.put("full_name", customerName);
+                customerInsertMap.put("identity_number", customerId);
+                customerInsertMap.put("phone_number", customerPhone);
 
-
-
-
+                model.insertCustomer(customerInsertMap);
+                model.selectAllCustomers(customerColumns);
+                customerTableView.setItems(model.getCustomers());
             }
         });
 
@@ -128,6 +133,10 @@ public class CustomerController extends SceneController implements Initializable
                 System.out.println("selected: " + selected);
                 var selectedId = selected.getId();
                 System.out.println("Deleting id " + selectedId);
+
+                model.deleteCustomer(selectedId);
+                model.selectAllCustomers(customerColumns);
+                customerTableView.setItems(model.getCustomers());
 
             }
         });
