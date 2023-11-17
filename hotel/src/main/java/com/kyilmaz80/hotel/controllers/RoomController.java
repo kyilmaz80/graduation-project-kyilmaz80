@@ -69,10 +69,6 @@ public class RoomController extends SceneController implements Initializable {
 
                 Map<String, Pair<String,String>> roomMapColumns = new HashMap<>();
 
-
-                //TODO:
-                //hepsi secildiğinde room'da
-                //Exception in thread "JavaFX Application Thread" java.util.UnknownFormatConversionException: Conversion = '''
                 if (!validateInputs()) {
                     System.out.println("Inputs not valid!");
                     return;
