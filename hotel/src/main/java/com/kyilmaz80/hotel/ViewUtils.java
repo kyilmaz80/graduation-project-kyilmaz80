@@ -1,6 +1,7 @@
 package com.kyilmaz80.hotel;
 
 import com.kyilmaz80.hotel.controllers.SceneController;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 public class ViewUtils {
 
-    public static void changeScene(MouseEvent event,
+    public static void changeScene(Event event,
                                    String fxmlFile,
                                    String title,
                                    int width,

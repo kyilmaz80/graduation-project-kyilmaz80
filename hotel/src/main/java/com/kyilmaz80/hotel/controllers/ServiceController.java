@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.net.URL;
 import java.util.Map;
@@ -49,6 +50,19 @@ public class ServiceController extends SceneController implements Initializable 
 
         serviceId.setCellValueFactory(new PropertyValueFactory<Service, Integer>("id"));
         serviceName.setCellValueFactory(new PropertyValueFactory<Service, String>("name"));
+
+        //TODO: update edit data
+        // https://stackoverflow.com/questions/41465181/tableview-update-database-on-edit
+        serviceName.setCellFactory(TextFieldTableCell.forTableColumn());
+        serviceName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Service, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Service, String> serviceStringCellEditEvent) {
+                var items = serviceStringCellEditEvent.getTableView().getItems();
+                var row = items.get(serviceStringCellEditEvent.getTablePosition().getRow());
+                row.setName(serviceStringCellEditEvent.getNewValue());
+
+            }
+        });
 
         model = new ServiceModel();
         // table view init

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.HotelController">
+<AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.HotelController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="79.0" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #8fbc8f;" AnchorPane.bottomAnchor="659.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -57,7 +57,7 @@
             <TableColumn fx:id="customerName" prefWidth="123.0" text="Customers" />
         </columns>
       </TableView>
-      <Button layoutX="45.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
+      <Button fx:id="reservationButton" layoutX="45.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
       <Button layoutX="228.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
       <Button layoutX="360.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
    </children>

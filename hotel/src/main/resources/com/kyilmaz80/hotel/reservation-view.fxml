@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.ReservationController">
+    <children>
+        <HBox alignment="CENTER_LEFT" layoutX="79.0" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #8fbc8f;" AnchorPane.bottomAnchor="659.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
+                <Label fx:id="roomsLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="Rooms">
+                    <font>
+                        <Font name="JetBrains Mono NL Bold" size="14.0" />
+                    </font></Label>
+                <Label fx:id="featuresLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="Features">
+                    <font>
+                        <Font name="JetBrains Mono NL Bold" size="14.0" />
+                    </font></Label>
+                <Label fx:id="room_featuresLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="RoomFeatures">
+                    <font>
+                        <Font name="JetBrains Mono NL Bold" size="14.0" />
+                    </font></Label>
+                <Label fx:id="servicesLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="Services">
+                    <font>
+                        <Font name="JetBrains Mono NL Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="customersLabel" onMouseClicked="#openScene" onMouseEntered="#onEnterLabel" onMouseExited="#onExitLabel" style="-fx-border-color: #008000; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5;" text="Customers">
+                    <font>
+                        <Font name="JetBrains Mono NL Bold" size="14.0" />
+                    </font>
+                </Label>
+            </children></HBox>
+        <Label alignment="CENTER" layoutX="311.0" layoutY="64.0" prefHeight="41.0" prefWidth="204.0" text="Add Reservations">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+            <children>
+            <Label text="Room" />
+            <ComboBox fx:id="roomNameC" prefWidth="150.0" />
+                <Label text="          Check-in    " />
+                <DatePicker fx:id="reservationCheckInDatePicker" />
+                <Label text="Check-out" />
+                <DatePicker fx:id="reservationCheckOutDatePicker" />
+            </children></HBox>
+        <TableView fx:id="reservationsTableView" layoutX="-6.0" layoutY="286.0" prefHeight="414.0" prefWidth="900.0">
+            <columns>
+                <TableColumn fx:id="reservationId" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="reservationRoomId" prefWidth="98.0" text="Room" />
+                <TableColumn fx:id="reservationCheckInDate" prefWidth="125.0" text="Check-in Date" />
+                <TableColumn fx:id="reservationCheckOutDate" prefWidth="130.0" text="Check-out Date" />
+                <TableColumn fx:id="reservationCheckedInDate" prefWidth="114.0" text="Checked-in" />
+                <TableColumn fx:id="reservationCheckedOutDate" prefWidth="118.0" text="Checked-out" />
+                <TableColumn fx:id="reservationCustomerName" prefWidth="149.0" text="Customer Name" />
+            </columns>
+        </TableView>
+      <HBox alignment="CENTER_LEFT" layoutX="282.0" layoutY="164.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+         <children>
+            <Label text="Checked-in " />
+            <DatePicker fx:id="reservationCheckedInDatePicker" />
+            <Label text="Check-out" />
+            <DatePicker fx:id="reservationCheckedOutDatePicker" />
+         </children>
+      </HBox>
+      <Button fx:id="addButton" layoutX="282.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
+      <Button fx:id="deleteButton" layoutX="413.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Delete" />
+    </children>
+</AnchorPane>

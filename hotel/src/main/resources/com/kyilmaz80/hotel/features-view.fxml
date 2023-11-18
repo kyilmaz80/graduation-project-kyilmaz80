@@ -8,7 +8,7 @@
     <children>
         <SplitPane dividerPositions="0.40257879656160456" layoutX="273.0" layoutY="111.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
                         <ToolBar layoutX="172.0" layoutY="6.0" prefHeight="42.0" prefWidth="898.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
