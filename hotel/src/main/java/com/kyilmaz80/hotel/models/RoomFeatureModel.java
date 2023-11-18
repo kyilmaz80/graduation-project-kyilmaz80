@@ -31,7 +31,7 @@ public class RoomFeatureModel {
         roomFeatures = (ObservableList<RoomFeature>) newList;
     }
 
-    public void insertRoomFeature(Map<String,String> roomFeatureInsertMap) {
+    public void insertRoomFeature(Map<String,Object> roomFeatureInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO RoomFeature (feature_id, room_id) VALUES(?,?)";
         // uniq constraint error'de rollback sonrasi id ler 1 artıyor, gap oluyor

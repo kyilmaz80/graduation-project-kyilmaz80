@@ -36,7 +36,7 @@ public class CustomerModel {
         customers = (ObservableList<Customer>) newList;
     }
 
-    public void insertCustomer(Map<String,String> customerInsertMap) {
+    public void insertCustomer(Map<String,Object> customerInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO Customer (birth_date, description, full_name, identity_number, phone_number) " +
                 "VALUES(?,?,?,?,?)";

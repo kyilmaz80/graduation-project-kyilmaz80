@@ -27,7 +27,7 @@ public class ServiceModel {
         services = (ObservableList<Service>) newList;
     }
 
-    public void insertService(Map<String,String> serviceInsertMap) {
+    public void insertService(Map<String,Object> serviceInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO Service (name) VALUES(?)";
         // uniq constraint error'de rollback sonrasi id ler 1 artıyor, gap oluyor

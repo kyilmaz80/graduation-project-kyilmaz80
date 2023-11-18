@@ -132,7 +132,7 @@ public class RoomController extends SceneController implements Initializable {
                     System.out.println("Inputs not valid!");
                     return;
                 }
-                Map<String, String> roomInsertMap = new TreeMap<>();
+                Map<String, Object> roomInsertMap = new TreeMap<>();
                 String roomName = roomNameTextField.getText();
                 String capacity = roomCapacityTextField.getText();
                 String price = roomPriceTextField.getText();

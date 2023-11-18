@@ -123,7 +123,7 @@ public class RoomFeatureController extends SceneController implements Initializa
                     return;
                 }
 
-                Map<String, String> roomFeatureInsertMap = new TreeMap<>();
+                Map<String, Object> roomFeatureInsertMap = new TreeMap<>();
                 //roomFeatureInsertMap.put("room_id", String.valueOf(selectedRoomId));
 
                 System.out.println("selected: " + selectedFeatures);

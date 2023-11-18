@@ -93,7 +93,7 @@ public class CustomerController extends SceneController implements Initializable
                     return;
                 }
 
-                Map<String, String> customerInsertMap = new TreeMap<>();
+                Map<String, Object> customerInsertMap = new TreeMap<>();
 
                 String customerName = customerFullNameTextField.getText();
                 String customerId = customerIdentityNumberTextField.getText();

@@ -138,7 +138,7 @@ public class RoomModel {
         roomTypes = (ObservableList<RoomType>) newList;
     }
 
-    public void insertRoom(Map<String,String> roomInsertMap) {
+    public void insertRoom(Map<String,Object> roomInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO Room (capacity, name, price, tid) VALUES(?,?,?,?)";
         try {

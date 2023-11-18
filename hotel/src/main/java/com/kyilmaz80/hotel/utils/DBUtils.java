@@ -77,7 +77,7 @@ public class DBUtils {
         }
     }
 
-    public static void executeStatement(String sqlString, Map<String,String> columnsMap ) {
+    public static void executeStatement(String sqlString, Map<String,Object> columnsMap ) {
         Connection connection;
         try {
             connection = JDBCUtils.getConnection();
@@ -88,7 +88,7 @@ public class DBUtils {
             PreparedStatement ps = connection.prepareStatement(sqlString);
             // ps.setInt(1, id);
             int parameterIndex = 1;
-            for(Map.Entry<String,String> entry : columnsMap.entrySet() ) {
+            for(Map.Entry<String,Object> entry : columnsMap.entrySet() ) {
                 System.out.println( "entry.getKey: " +  entry.getKey() + " entry.getValue() : " + entry.getValue());
                 ps.setObject(parameterIndex++, entry.getValue());
             }

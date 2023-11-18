@@ -82,7 +82,7 @@ public class ServiceController extends SceneController implements Initializable 
                 String serviceName = serviceNameTextField.getText();
                 System.out.println(serviceName);
 
-                Map<String, String> serviceInsertMap = new TreeMap<>();
+                Map<String, Object> serviceInsertMap = new TreeMap<>();
                 serviceInsertMap.put("name", serviceName);
 
                 model.insertService(serviceInsertMap);
