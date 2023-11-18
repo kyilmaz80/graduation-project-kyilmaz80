@@ -69,21 +69,7 @@ public class ReservationController extends SceneController implements Initializa
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
     }
-    @FXML
-    private void openScene(Event event) {
-        String viewName = "reservation";
-        String viewFile = viewName + "-view.fxml";
-        String titleName = StringUtils.toUpperFirstChar(viewName);
-        System.out.println("view file: " + viewFile);
-        Scene currentScene = addButton.getScene();
-        System.out.println("current scene: " + currentScene);
-        ViewUtils.changeScene(event,
-                viewFile,
-                titleName,
-                DomainConstants.HOTEL_APP_WINDOW_WIDTH,
-                DomainConstants.HOTEL_APP_WINDOW_HEIGHT,
-                currentScene);
-    }
+
 
 
 }
