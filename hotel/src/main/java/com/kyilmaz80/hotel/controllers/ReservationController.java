@@ -165,11 +165,8 @@ public class ReservationController extends SceneController implements Initializa
 
                 reservationModel.insertReservation(reservationInsertMap);
                 reservationModel.selectAllReservations();
-                reservationTableView.setItems(reservationModel.getReservations());
 
-
-                /*
-                Map<String, String> reservationCustomerInsertMap = new TreeMap<>();
+                Map<String, Object> reservationCustomerInsertMap = new TreeMap<>();
 
                 ObservableList<Reservation> reservations;
                 Reservation lastReservation = null;
@@ -185,9 +182,9 @@ public class ReservationController extends SceneController implements Initializa
                 reservationCustomerInsertMap.put("reservation_id", String.valueOf(newReservationId));
 
                 reservationCustomerModel.insertReservationCustomer(reservationCustomerInsertMap);
-
-                 */
-
+                reservationCustomerModel.selectAllReservationCustomers();
+                reservationModel.selectAllReservations();
+                reservationTableView.setItems(reservationModel.getReservations());
 
             }
         });
