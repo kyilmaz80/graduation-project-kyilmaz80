@@ -54,6 +54,7 @@ public class HotelController extends SceneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /*
         reservationButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -70,5 +71,7 @@ public class HotelController extends SceneController implements Initializable {
 
             }
         });
+
+         */
     }
 }

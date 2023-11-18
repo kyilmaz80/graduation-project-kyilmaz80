@@ -57,7 +57,7 @@
             <TableColumn fx:id="customerName" prefWidth="123.0" text="Customers" />
         </columns>
       </TableView>
-      <Button fx:id="reservationButton" layoutX="45.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
+      <Button fx:id="reservationButton" layoutX="45.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#openScene" onMouseEntered="#onEnterButton" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
       <Button layoutX="228.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
       <Button layoutX="360.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
    </children>

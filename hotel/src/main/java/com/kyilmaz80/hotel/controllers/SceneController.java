@@ -44,6 +44,7 @@ public class SceneController implements Initializable {
         System.out.println("On click back");
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         System.out.println(preScene);
+        stage.setTitle(DomainConstants.HOTEL_APP_TITLE_NAME);
         stage.setScene(preScene);
         stage.show();
     }
@@ -62,6 +63,16 @@ public class SceneController implements Initializable {
     }
 
     @FXML
+    private void onEnterButton(MouseEvent event) {
+        Button button = (Button) event.getTarget();
+        System.out.println(event.getTarget());
+        if (event.getEventType().getName() == "MOUSE_ENTERED") {
+            selectedLabel = button.getId();
+            System.out.println(selectedLabel);
+        }
+    }
+
+    @FXML
     private void onExitLabel(MouseEvent event) {
         System.out.println(event.getTarget());
         System.out.println(event.getEventType().getName());
@@ -74,11 +85,9 @@ public class SceneController implements Initializable {
 
     @FXML
     private void openScene(Event event) {
-        String viewName = selectedLabel.toLowerCase().replaceAll("label", "");
-        if (event.getTarget() instanceof  Button) {
-            Button button = (Button) event.getTarget();
-            viewName = button.getId().toLowerCase().replaceAll("button", "");
-        }
+        String viewName = selectedLabel.toLowerCase().
+                replaceAll("label", "").
+                replaceAll("button", "");
         //String viewName = "reservation";
         String viewFile = viewName + "-view.fxml";
         String titleName = StringUtils.toUpperFirstChar(viewName);
