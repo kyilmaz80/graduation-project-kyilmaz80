@@ -40,13 +40,13 @@
         <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
             <children>
             <Label text="Room" />
-            <ComboBox fx:id="roomNameC" prefWidth="150.0" />
+            <ComboBox fx:id="roomComboBox" prefWidth="150.0" />
                 <Label text="          Check-in    " />
                 <DatePicker fx:id="reservationCheckInDatePicker" />
                 <Label text="Check-out" />
                 <DatePicker fx:id="reservationCheckOutDatePicker" />
             </children></HBox>
-        <TableView fx:id="reservationsTableView" layoutX="-6.0" layoutY="286.0" prefHeight="414.0" prefWidth="900.0">
+        <TableView fx:id="reservationTableView" layoutY="286.0" prefHeight="414.0" prefWidth="894.0">
             <columns>
                 <TableColumn fx:id="reservationId" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="reservationRoomId" prefWidth="98.0" text="Room" />
@@ -67,5 +67,7 @@
       </HBox>
       <Button fx:id="addButton" layoutX="282.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
       <Button fx:id="deleteButton" layoutX="413.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Delete" />
+      <Label layoutX="13.0" layoutY="179.0" text="Customer" />
+      <ComboBox fx:id="customerComboBox" layoutX="85.0" layoutY="173.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

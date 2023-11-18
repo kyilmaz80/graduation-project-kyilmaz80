@@ -19,5 +19,10 @@ public class ReservationModel {
         reservations = (ObservableList<Reservation>) newList;
     }
 
+    public void selectAllReservations() {
+        ObservableList<?> newList = new DBUtils().selectEntityList("*", "reservation_view");
+        reservations = (ObservableList<Reservation>) newList;
+    }
+
 
 }

@@ -199,6 +199,7 @@ public class DBUtils {
     public ObservableList<Object> selectEntityList(String columnsStr, String tableName) {
         ObservableList<Object> newList = FXCollections.observableArrayList();
         String query = "SELECT %s FROM %s";
+        String className;
 
         query = String.format(query, columnsStr, tableName);
 
@@ -215,7 +216,13 @@ public class DBUtils {
 
         try {
             while (rs.next()) {
-                String className = "com.kyilmaz80.hotel.models." + tableName;
+                //Poor mans solution for view entity with two joined models
+                //do now know best practice?
+                if (tableName.equalsIgnoreCase("reservation_view")) {
+                    className = "com.kyilmaz80.hotel.models." + "Reservation";
+                } else {
+                    className = "com.kyilmaz80.hotel.models." + tableName;
+                }
                 Class<?> clazz;
                 Field[] fields;
                 Object entity = null;
@@ -229,6 +236,7 @@ public class DBUtils {
                         Object value = rs.getObject(fieldName);
                         String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                         Method setter = clazz.getMethod(setterName, field.getType());
+                        System.out.println("invoking: " + setterName);
                         setter.invoke(entity, value);
                     }
 

@@ -74,11 +74,20 @@ public class Customer {
     }
 
     public Customer() {
-        this.id = 0;
-        this.full_name = "Zero";
+        this.id = -1;
+        this.full_name = "";
         this.identity_number = "11111111111";
         this.phone_number = "1111111111";
         this.birth_date = Date.valueOf("1970-01-01");
         this.description = "Test";
+    }
+
+    @Override
+    public String toString() {
+        if (id == -1 && full_name.isEmpty()) {
+            return "";
+        } else {
+            return this.getFull_name();
+        }
     }
 }

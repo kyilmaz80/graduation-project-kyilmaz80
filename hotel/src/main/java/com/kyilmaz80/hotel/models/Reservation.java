@@ -1,25 +1,25 @@
 package com.kyilmaz80.hotel.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Reservation {
     //reservation_view mapped
     private int id;
     private int room_id;
-    private Timestamp checkin_date;
-    private Timestamp checkout_date;
-    private Timestamp checkedin_date;
-    private Timestamp checkedout_date;
+    private LocalDateTime checkin_date;
+    private LocalDateTime checkout_date;
+    private LocalDateTime checkedin_time;
+    private LocalDateTime checkedout_time;
     private String customer_name;
 
-    public Reservation(int id, int room_id, Timestamp checkin_date, Timestamp checkout_date,
-                       Timestamp checkedin_date, Timestamp checkedout_date, String customer_name) {
+    public Reservation(int id, int room_id, LocalDateTime checkin_date, LocalDateTime checkout_date,
+                       LocalDateTime checkedin_time, LocalDateTime checkedout_time, String customer_name) {
         this.id = id;
         this.room_id = room_id;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
-        this.checkedin_date = checkedin_date;
-        this.checkedout_date = checkedout_date;
+        this.checkedin_time = checkedin_time;
+        this.checkedout_time = checkedout_time;
         this.customer_name = customer_name;
     }
 
@@ -28,8 +28,8 @@ public class Reservation {
         this.room_id = 0;
         this.checkin_date = null;
         this.checkout_date = null;
-        this.checkedin_date = null;
-        this.checkedout_date = null;
+        this.checkedin_time = null;
+        this.checkedout_time = null;
         this.customer_name = "";
     }
 
@@ -49,36 +49,36 @@ public class Reservation {
         this.room_id = room_id;
     }
 
-    public Timestamp getCheckin_date() {
+    public LocalDateTime getCheckin_date() {
         return checkin_date;
     }
 
-    public void setCheckin_date(Timestamp checkin_date) {
+    public void setCheckin_date(LocalDateTime checkin_date) {
         this.checkin_date = checkin_date;
     }
 
-    public Timestamp getCheckout_date() {
+    public LocalDateTime getCheckout_date() {
         return checkout_date;
     }
 
-    public void setCheckout_date(Timestamp checkout_date) {
+    public void setCheckout_date(LocalDateTime checkout_date) {
         this.checkout_date = checkout_date;
     }
 
-    public Timestamp getCheckedin_date() {
-        return checkedin_date;
+    public LocalDateTime getCheckedin_time() {
+        return checkedin_time;
     }
 
-    public void setCheckedin_date(Timestamp checkedin_date) {
-        this.checkedin_date = checkedin_date;
+    public void setCheckedin_time(LocalDateTime checkedin_time) {
+        this.checkedin_time = checkedin_time;
     }
 
-    public Timestamp getCheckedout_date() {
-        return checkedout_date;
+    public LocalDateTime getCheckedout_time() {
+        return checkedout_time;
     }
 
-    public void setCheckedout_date(Timestamp checkedout_date) {
-        this.checkedout_date = checkedout_date;
+    public void setCheckedout_time(LocalDateTime checkedout_time) {
+        this.checkedout_time = checkedout_time;
     }
 
     public String getCustomer_name() {

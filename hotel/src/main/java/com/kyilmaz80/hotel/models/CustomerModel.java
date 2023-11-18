@@ -31,6 +31,11 @@ public class CustomerModel {
         customers = (ObservableList<Customer>) newList;
     }
 
+    public void selectAllCustomers() {
+        ObservableList<?> newList = new DBUtils().selectEntityList("*", "Customer");
+        customers = (ObservableList<Customer>) newList;
+    }
+
     public void insertCustomer(Map<String,String> customerInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO Customer (birth_date, description, full_name, identity_number, phone_number) " +

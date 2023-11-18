@@ -70,4 +70,13 @@ public class Room {
         this.tid = 0;
     }
 
+    @Override
+    public String toString() {
+        if (id == -1 && name.isEmpty()) {
+            return "";
+        } else {
+            return this.getName();
+        }
+    }
+
 }
