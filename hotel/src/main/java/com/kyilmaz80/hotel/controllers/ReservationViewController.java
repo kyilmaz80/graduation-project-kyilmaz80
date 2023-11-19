@@ -189,6 +189,20 @@ public class ReservationViewController extends SceneController implements Initia
                 var selectedCustomerId = selectedCustomer.getId();
                 System.out.println("Mapping customer id " + selectedCustomerId);
 
+                var selectedGuest = guestComboBox.getValue();
+                int selectedGuestId = -1;
+
+                if (selectedGuest == null && selectedRoomCapacity == 2) {
+                    ViewUtils.showAlert("No guest customer item selected!");
+                    return;
+                }
+                if (selectedRoomCapacity == 2) {
+                    System.out.println("selected guest customer: " + selectedGuest);
+                    selectedGuestId = selectedGuest.getId();
+                    System.out.println("Mapping guest customer id " + selectedGuestId);
+                }
+
+
                 LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
                 LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
 
@@ -218,6 +232,7 @@ public class ReservationViewController extends SceneController implements Initia
                 //reservationViewModel.selectAllReservations();
 
                 Map<String, Object> reservationCustomerInsertMap = new TreeMap<>();
+                Map<String, Object> reservationGuestInsertMap = new TreeMap<>();
 
                 ObservableList<Reservation> reservations;
                 Reservation lastReservation = null;
@@ -232,7 +247,19 @@ public class ReservationViewController extends SceneController implements Initia
                 reservationCustomerInsertMap.put("customer_id", String.valueOf(selectedCustomerId));
                 reservationCustomerInsertMap.put("reservation_id", String.valueOf(lastReservationId));
 
+                if (selectedRoomCapacity == 2) {
+                    if (selectedGuestId == -1) {
+                        throw new RuntimeException("selectedGuestId -1 not expected");
+                    }
+                    reservationGuestInsertMap.put("customer_id", String.valueOf(selectedGuestId));
+                    reservationGuestInsertMap.put("reservation_id", String.valueOf(lastReservationId));
+                }
+
+
                 reservationCustomerModel.insertReservationCustomer(reservationCustomerInsertMap);
+                if (selectedRoomCapacity == 2) {
+                    reservationCustomerModel.insertReservationCustomer(reservationGuestInsertMap);
+                }
                 reservationCustomerModel.selectAllReservationCustomers();
                 reservationModel.selectAllReservations();
                 reservationViewModel.selectAllReservations();
