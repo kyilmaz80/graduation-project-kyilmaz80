@@ -5,6 +5,7 @@ import com.kyilmaz80.hotel.utils.DBUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class ReservationModel {
@@ -43,6 +44,16 @@ public class ReservationModel {
     public void deleteReservation(int id) {
         String sqlString = "DELETE FROM Reservation WHERE id = ?";
         DBUtils.executeStatement(sqlString, id);
+    }
+
+    public void updateReservationCheckedIn(int id, LocalDateTime d) {
+        String sqlString = "UPDATE Reservation SET checkedin_time = ? WHERE id = ?";
+        DBUtils.executeStatement(sqlString, d, id);
+    }
+
+    public void updateReservationCheckedOut(int id, LocalDateTime d) {
+        String sqlString = "UPDATE Reservation SET checkedout_time = ? WHERE id = ?";
+        DBUtils.executeStatement(sqlString, d, id);
     }
 
 

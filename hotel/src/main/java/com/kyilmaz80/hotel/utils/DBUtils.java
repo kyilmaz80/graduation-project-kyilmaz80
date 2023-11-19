@@ -62,6 +62,26 @@ public class DBUtils {
 
     }
 
+    public static void executeStatement(String sqlString, LocalDateTime col1, Integer col2) {
+        Connection connection;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB connection problem!");
+                return;
+            }
+            PreparedStatement ps = connection.prepareStatement(sqlString);
+            ps.setObject(1, col1.toString());
+            ps.setInt (2, col2);
+            ps.execute();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
     public static void executeStatement(String sqlString, int id) {
         Connection connection;
         try {

@@ -55,6 +55,9 @@ public class ReservationViewController extends SceneController implements Initia
     private Button deleteButton;
 
     @FXML
+    private Button buttonCheckedInOut;
+
+    @FXML
     private ComboBox<Room> roomComboBox;
 
     @FXML
@@ -65,8 +68,15 @@ public class ReservationViewController extends SceneController implements Initia
 
     @FXML
     private Spinner<Integer> roomCapacitySpinner;
+
     @FXML
     private DateTimePicker reservationCheckInDatePicker;
+
+    @FXML
+    private DateTimePicker reservationCheckedInDatePicker;
+
+    @FXML
+    private DateTimePicker reservationCheckedOutDatePicker;
 
     @FXML
     private DateTimePicker reservationCheckOutDatePicker;
@@ -80,6 +90,8 @@ public class ReservationViewController extends SceneController implements Initia
     private int selectedRoomId;
     private LocalDateTime reservationCheckIn;
     private LocalDateTime reservationCheckOut;
+
+
 
     private void initRoomComboBox() {
         ObservableList<Room>  roomObservable = null;
@@ -288,6 +300,32 @@ public class ReservationViewController extends SceneController implements Initia
 
             }
         });
+
+        buttonCheckedInOut.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                var selected = reservationTableView.getSelectionModel().getSelectedItem();
+                if (selected == null) {
+                    ViewUtils.showAlert("No reservation item selected!");
+                    return;
+                }
+                System.out.println("selected: " + selected);
+                var selectedId = selected.getId();
+                if (reservationCheckedInDatePicker.getDateTimeValue() != null)  {
+                    reservationModel.updateReservationCheckedIn(selectedId, reservationCheckedInDatePicker.getDateTimeValue());
+                }
+
+                if (reservationCheckedOutDatePicker.getDateTimeValue() != null) {
+                    reservationModel.updateReservationCheckedOut(selectedId, reservationCheckedOutDatePicker.getDateTimeValue());
+                }
+
+                reservationViewModel.selectAllReservations();
+                reservationTableView.setItems(reservationViewModel.getReservations());
+
+
+            }
+        });
+
 
         roomComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override

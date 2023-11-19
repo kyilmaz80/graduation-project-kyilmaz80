@@ -3,8 +3,10 @@ package com.kyilmaz80.hotel.controllers;
 import com.kyilmaz80.hotel.DomainConstants;
 import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.models.Customer;
+import com.kyilmaz80.hotel.models.ReservationModel;
 import com.kyilmaz80.hotel.models.ReservationView;
 import com.kyilmaz80.hotel.models.ReservationViewModel;
+import com.kyilmaz80.hotel.utils.DateTimePicker;
 import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -94,6 +96,8 @@ public class HotelController extends SceneController implements Initializable {
         reservationCheckedOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedout_time"));
         reservationCustomerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customer_name"));
 
+
+
         reservationViewModel = new ReservationViewModel();
         // table view init
         reservationViewModel.selectAllReservations();
@@ -139,5 +143,7 @@ public class HotelController extends SceneController implements Initializable {
                 reservationTableView.setItems(reservationViewModel.getReservations());
             }
         });
+
+
     }
 }
