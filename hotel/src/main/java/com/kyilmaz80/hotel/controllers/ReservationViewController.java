@@ -77,7 +77,9 @@ public class ReservationViewController extends SceneController implements Initia
     private ReservationCustomerModel reservationCustomerModel;
 
     private int selectedRoomCapacity;
-
+    private int selectedRoomId;
+    private LocalDateTime reservationCheckIn;
+    private LocalDateTime reservationCheckOut;
 
     private void initRoomComboBox() {
         ObservableList<Room>  roomObservable = null;
@@ -176,7 +178,7 @@ public class ReservationViewController extends SceneController implements Initia
                     return;
                 }
                 System.out.println("selected: " + selectedRoom);
-                int selectedRoomId = selectedRoom.getId();
+                selectedRoomId = selectedRoom.getId();
                 System.out.println("Mapping room id " + selectedRoomId);
 
                 var selectedCustomer = customerComboBox.getValue();
@@ -203,8 +205,8 @@ public class ReservationViewController extends SceneController implements Initia
                 }
 
 
-                LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
-                LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
+                reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
+                reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
 
                 Map<String, Object> reservationInsertMap = new TreeMap<>();
                 reservationInsertMap.put("room_id", selectedRoomId);
@@ -255,6 +257,10 @@ public class ReservationViewController extends SceneController implements Initia
                     reservationGuestInsertMap.put("reservation_id", String.valueOf(lastReservationId));
                 }
 
+                if (!isSelectedRoomAvailable()) {
+                    ViewUtils.showAlert("Selected room is not available for reservation! Please select another.");
+                    return;
+                }
 
                 reservationCustomerModel.insertReservationCustomer(reservationCustomerInsertMap);
                 if (selectedRoomCapacity == 2) {
@@ -319,20 +325,48 @@ public class ReservationViewController extends SceneController implements Initia
         LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
         LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
         LocalDateTime fromDateTime = LocalDateTime.from(reservationCheckIn);
-        long hours = fromDateTime.until(reservationCheckOut, ChronoUnit.HOURS);
-        long days = fromDateTime.until(reservationCheckOut, ChronoUnit.DAYS);
-        System.out.println("Reservation days: " + days);
-        System.out.println("Reservation hours: " + hours);
+        long hoursDiff = fromDateTime.until(reservationCheckOut, ChronoUnit.HOURS);
+        long daysDiff = fromDateTime.until(reservationCheckOut, ChronoUnit.DAYS);
+        System.out.println("Reservation days: " + daysDiff);
+        System.out.println("Reservation hours: " + hoursDiff);
 
-        if (days < 0 || (days == 0 && hours == 0)) {
+        if (daysDiff < 0 || (daysDiff == 0 && hoursDiff == 0)) {
             ViewUtils.showAlert("Check-out must be greater than Check-in!");
             return false;
         }
-        if (days <=1 && hours < 24 ) {
+        if (daysDiff == 0 && hoursDiff < 24 ) {
             ViewUtils.showAlert("No hour based Check-in!");
             return false;
         }
 
+
+        return true;
+    }
+
+    private boolean isSelectedRoomAvailable() {
+        ObservableList<Reservation> reservations = reservationModel.getReservations();
+        /*
+        Date a, b;   // assume these are set to something
+        Date d;      // the date in question
+
+        return a.compareTo(d) * d.compareTo(b) >= 0; //inclusive =
+         */
+        LocalDateTime a;
+        LocalDateTime b;
+        LocalDateTime d = reservationCheckIn;
+
+        for(Reservation reservation : reservations) {
+            if (selectedRoomId == reservation.getRoom_id()) {
+                a = reservation.getCheckin_date();
+                b = reservation.getCheckout_date();
+                if (a.compareTo(d) * d.compareTo(b) >= 0) {
+                    System.out.println("Reservation Checkin in db: " + a);
+                    System.out.println("Reservation Checkout in db: " + b);
+                    System.out.println("Reservation check in in question: " + d);
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
