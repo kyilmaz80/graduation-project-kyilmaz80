@@ -208,6 +208,12 @@ public class ReservationViewController extends SceneController implements Initia
                 reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
                 reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
 
+                //TODO: fix
+                if (!isSelectedRoomAvailable()) {
+                    ViewUtils.showAlert("Selected room is not available for reservation! Please select another.");
+                    return;
+                }
+
                 Map<String, Object> reservationInsertMap = new TreeMap<>();
                 reservationInsertMap.put("room_id", selectedRoomId);
                 reservationInsertMap.put("checkin_date", reservationCheckIn.toString());
@@ -257,10 +263,6 @@ public class ReservationViewController extends SceneController implements Initia
                     reservationGuestInsertMap.put("reservation_id", String.valueOf(lastReservationId));
                 }
 
-                if (!isSelectedRoomAvailable()) {
-                    ViewUtils.showAlert("Selected room is not available for reservation! Please select another.");
-                    return;
-                }
 
                 reservationCustomerModel.insertReservationCustomer(reservationCustomerInsertMap);
                 if (selectedRoomCapacity == 2) {
@@ -359,10 +361,14 @@ public class ReservationViewController extends SceneController implements Initia
             if (selectedRoomId == reservation.getRoom_id()) {
                 a = reservation.getCheckin_date();
                 b = reservation.getCheckout_date();
-                if (a.compareTo(d) * d.compareTo(b) >= 0) {
-                    System.out.println("Reservation Checkin in db: " + a);
-                    System.out.println("Reservation Checkout in db: " + b);
-                    System.out.println("Reservation check in in question: " + d);
+                System.out.println("Reservation Checkin in db: " + a);
+                System.out.println("Reservation Checkout in db: " + b);
+                System.out.println("Reservation check in in question: " + d);
+                if(d.isEqual(a)) {
+                    return false;
+                }
+                if (d.isAfter(a) && d.isBefore(b)) {
+                //if (a.compareTo(d) * d.compareTo(b) >= 0) {
                     return false;
                 }
             }
