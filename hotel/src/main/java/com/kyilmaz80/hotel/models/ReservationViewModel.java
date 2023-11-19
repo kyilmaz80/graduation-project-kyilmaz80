@@ -72,6 +72,11 @@ public class ReservationViewModel {
         reservations = newList;
     }
 
+    public void selectReservationListOrFilter(Map<String, Pair<String,String>> columnsMap) {
+        ObservableList<?> newList  = new DBUtils().selectEntityListOrFilter(columnsMap, "ReservationView");
+        reservations = (ObservableList<ReservationView>) newList;
+    }
+
     /*
      public void selectRoomListFilter2(Map<String, Pair<String,String>> columnsMap) {
         ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "Room");

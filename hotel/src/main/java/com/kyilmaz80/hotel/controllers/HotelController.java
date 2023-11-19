@@ -109,6 +109,8 @@ public class HotelController extends SceneController implements Initializable {
                     return;
                 }
 
+                Map<String, Pair<String,String>> reservationViewMapColumns = new HashMap<>();
+
                 /*
                 Map<String, Pair<String,String>> reservationMapColumns = new HashMap<>();
                 //roomMapColumns.put("name", new Pair<String,String>(roomNameTextField.getText(), "LIKE"));
@@ -126,7 +128,14 @@ public class HotelController extends SceneController implements Initializable {
                     reservationTo = LocalDate.now();
                 }
 
+
                 reservationViewModel.selectReservationsBetweenTwo(reservationFrom, reservationTo);
+                String reservationSearch = reservationSearchTextField.getText();
+                if (!reservationSearch.isEmpty()) {
+                    reservationViewMapColumns.put("customer_name", new Pair<String,String>(reservationSearch, "LIKE"));
+                    reservationViewModel.selectReservationListOrFilter(reservationViewMapColumns);
+                }
+
                 reservationTableView.setItems(reservationViewModel.getReservations());
             }
         });

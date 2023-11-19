@@ -364,6 +364,95 @@ public class DBUtils {
     }
 
 
+    public ObservableList<Object> selectEntityListOrFilter(Map<String, Pair<String, String>> columnsMap, String tableName) {
+        ObservableList<Object> newList = FXCollections.observableArrayList();
+        //String query = "SELECT * FROM %s WHERE %s %s ?";
+        String query = "SELECT * FROM %s WHERE %s %s %s";
+        String defaultOperator = " = ";
+
+        // <column_name, column_value>
+        Map<String, String> columnsMap2 = new HashMap<>();
+        int i = 0;
+        for (Map.Entry<String, Pair<String, String>> entry : columnsMap.entrySet()) {
+            Pair<String, String> columnInfo = entry.getValue();
+            String columnValue = columnInfo.getKey();
+            String operator = columnInfo.getValue().equals("LIKE") ? " LIKE " : defaultOperator;
+            operator = columnInfo.getValue().equals("BETWEEN") ? " BETWEEN " : operator;
+            columnsMap2.put(entry.getKey(), columnValue);
+
+            // Use different placeholders for LIKE operator
+            String placeholder = columnInfo.getValue().equals("LIKE") ? "CONCAT('%', ?, '%')": "?";
+
+            if (i == 0) {
+                query = String.format(query, tableName, StringUtils.filterStr(entry.getKey()), operator, placeholder);
+            } else {
+                // Use AND directly in the format string
+                query = String.format("%s OR %s %s %s", query, StringUtils.filterStr(entry.getKey()), operator, placeholder);
+            }
+            i++;
+
+        }
+
+        //String sqlString = "SELECT * FROM Room WHERE ? = ?";
+        String sqlString = query;
+        System.out.println("QUERY: "+ query);
+
+        /*
+        https://stackoverflow.com/questions/3135973/variable-column-names-using-prepared-statements
+        This indicates a bad DB design. The user shouldn't need to know about the column names. Create
+        a real DB column which holds those "column names" and store the data along it instead.
+        And any way, no, you cannot set column names as PreparedStatement values. You can only set
+        column values as PreparedStatement values
+        If you'd like to continue in this direction, you need to sanitize the column names (to avoid SQL Injection)
+        and concatenate/build the SQL string yourself. Quote the separate column names and use String#replace() to
+        escape the same quote inside the column name.
+         */
+
+        ResultSet rs = getSelectResultSetFromTable(sqlString, columnsMap2);
+
+        if (rs == null) {
+            System.out.println(JDBCUtils.error);
+            return null;
+        }
+
+        try {
+            while (rs.next()) {
+                String className = "com.kyilmaz80.hotel.models." + tableName;
+                Class<?> clazz = null;
+                Field[] fields;
+                Object entity = null;
+                try {
+                    // Load the class
+                    clazz = Class.forName(className);
+                    entity = clazz.getDeclaredConstructor().newInstance();
+                    fields = clazz.getDeclaredFields();
+                    for (Field field : fields) {
+                        String fieldName = field.getName();
+                        Object value = rs.getObject(fieldName);
+                        String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                        Method setter = clazz.getMethod(setterName, field.getType());
+                        setter.invoke(entity, value);
+                    }
+
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+                         IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                if (entity != null) {
+                    newList.add(entity);
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        //rooms = newList;
+        return newList;
+    }
+
+
     //TODO: FUTURE USE SQL DB INIT
     //https://www.baeldung.com/java-run-sql-script
     static void executeBatchedSQL(String scriptFilePath, Connection connection, int batchSize) throws Exception {
