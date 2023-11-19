@@ -50,15 +50,15 @@ public class FeatureController extends SceneController implements Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        /*
-        featuresId.setCellValueFactory(new PropertyValueFactory<Features, Integer>("id"));
-        featuresName.setCellValueFactory((new PropertyValueFactory<Features, String>("name")));
-        model = new FeaturesModel();
 
-        model.updateFeatureList("");
+        featureId.setCellValueFactory(new PropertyValueFactory<Feature, Integer>("id"));
+        featureName.setCellValueFactory((new PropertyValueFactory<Feature, String>("name")));
+        featurePrice.setCellValueFactory((new PropertyValueFactory<Feature, Double>("price")));
 
-        featuresTableView.setItems(model.getFeatures());
-         */
+        model = new FeatureModel();
+
+        model.selectAllFeatures();
+        featureTableView.setItems(model.getFeatures());
 
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -131,16 +131,6 @@ public class FeatureController extends SceneController implements Initializable 
                 featureTableView.setItems(model.getFeatures());
             }
         });
-
-
-        featureId.setCellValueFactory(new PropertyValueFactory<Feature, Integer>("id"));
-        featureName.setCellValueFactory((new PropertyValueFactory<Feature, String>("name")));
-        featurePrice.setCellValueFactory((new PropertyValueFactory<Feature, Double>("price")));
-
-        model = new FeatureModel();
-
-        model.selectAllFeatures();
-        featureTableView.setItems(model.getFeatures());
 
     }
 

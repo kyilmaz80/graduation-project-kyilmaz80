@@ -99,24 +99,11 @@ public class ReservationViewController extends SceneController implements Initia
         roomCapacitySpinner.valueFactoryProperty().set(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 DomainConstants.HOTEL_ROOM_MAX_CAPACITY));
 
-        //roomNameComboBox
-        //String roomColumns = "id,name";
         roomModel = new RoomModel();
-        //TODO: non-reserved rooms get
         roomModel.selectAllRooms();
-        //ObservableList<Room>  roomObservable = null;
 
         selectedRoomCapacity = roomCapacitySpinner.getValue().intValue();
 
-        //roomObservable = roomModel.getRooms();
-        /*
-        if (selectedRoomCapacity == 1) {
-            roomObservable = roomModel.getSingleRooms();
-        } else if (selectedRoomCapacity == 2) {
-            roomObservable = roomModel.getDoubleRooms();
-        }
-        roomComboBox.setItems(roomObservable);
-         */
         initRoomComboBox();
 
         //customerComboBox

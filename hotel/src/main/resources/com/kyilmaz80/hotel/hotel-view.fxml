@@ -36,29 +36,34 @@
             <Font name="JetBrains Mono NL Bold" size="13.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+      <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="113.0" prefHeight="48.0" prefWidth="894.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
          <children>
             <Label text="Filter By" />
             <Label text="From" />
-            <DatePicker />
+            <DatePicker fx:id="reservationFromDate" prefWidth="150.0" />
             <Label text="To" />
-            <DatePicker />
+            <DatePicker fx:id="reservationToDate" prefWidth="150.0" />
             <Label text="Search" />
-            <TextField />
+            <TextField fx:id="reservationSearchTextField" prefHeight="24.0" prefWidth="136.0" />
+            <Button fx:id="filterButton" mnemonicParsing="false" text="Filter" />
          </children></HBox>
-      <TableView fx:id="reservationsTableView" layoutX="35.0" layoutY="196.0" prefHeight="403.0">
-        <columns>
-          <TableColumn fx:id="reservationId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="roomName" prefWidth="98.0" text="Room" />
-            <TableColumn fx:id="checkInDate" prefWidth="125.0" text="Check-in Date" />
-            <TableColumn fx:id="checkOutDate" prefWidth="130.0" text="Check-out Date" />
-            <TableColumn fx:id="checkedIn" prefWidth="114.0" text="Checked-in" />
-            <TableColumn fx:id="checkedOut" prefWidth="99.0" text="Checked-out" />
-            <TableColumn fx:id="customerName" prefWidth="123.0" text="Customers" />
-        </columns>
+      <TableView fx:id="reservationTableView" layoutX="3.0" layoutY="182.0" prefHeight="462.0" prefWidth="900.0">
+         <columns>
+            <TableColumn fx:id="reservationId" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="reservationRoomId" prefWidth="98.0" text="Room" />
+            <TableColumn fx:id="reservationCheckInDate" prefWidth="125.0" text="Check-in Date" />
+            <TableColumn fx:id="reservationCheckOutDate" prefWidth="130.0" text="Check-out Date" />
+            <TableColumn fx:id="reservationCheckedInDate" prefWidth="114.0" text="Checked-in" />
+            <TableColumn fx:id="reservationCheckedOutDate" prefWidth="118.0" text="Checked-out" />
+            <TableColumn fx:id="reservationCustomerName" prefWidth="149.0" text="Customer Name" />
+         </columns>
       </TableView>
-      <Button fx:id="reservationButton" layoutX="45.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#openScene" onMouseEntered="#onEnterButton" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
-      <Button layoutX="228.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
-      <Button layoutX="360.0" layoutY="641.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
+      <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="660.0" prefHeight="41.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
+            <Button fx:id="reservationButton" mnemonicParsing="false" onMouseClicked="#openScene" onMouseEntered="#onEnterButton" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
+            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -63,6 +63,28 @@ public class RoomController extends SceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+
+        roomId.setCellValueFactory(new PropertyValueFactory<Room, Integer>("id"));
+        roomName.setCellValueFactory((new PropertyValueFactory<Room, String>("name")));
+        roomCapacity.setCellValueFactory((new PropertyValueFactory<Room, Integer>("capacity")));
+        roomPrice.setCellValueFactory((new PropertyValueFactory<Room, BigDecimal>("price")));
+        roomTypeId.setCellValueFactory((new PropertyValueFactory<Room, Integer>("tid")));
+
+        model = new RoomModel();
+
+        // table view init
+        model.selectAllRooms();
+        roomTableView.setItems(model.getRooms());
+
+        String roomTypeColumns = "id,tname";
+        // combo box init
+        model.selectRoomTypesList2(roomTypeColumns);
+        //roomTypeComboBox.getItems().addAll(model.getRoomTypes());
+        ObservableList<RoomType> roomTypeObservable = model.getRoomTypes();
+        //https://stackoverflow.com/questions/51689888/how-can-i-correctly-add-a-null-item-to-javafxs-combobox
+        roomTypeObservable.add(new RoomType()); // add empty room type
+        roomTypeComboBox.setItems(roomTypeObservable);
+
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -172,26 +194,6 @@ public class RoomController extends SceneController implements Initializable {
             }
         });
 
-        roomId.setCellValueFactory(new PropertyValueFactory<Room, Integer>("id"));
-        roomName.setCellValueFactory((new PropertyValueFactory<Room, String>("name")));
-        roomCapacity.setCellValueFactory((new PropertyValueFactory<Room, Integer>("capacity")));
-        roomPrice.setCellValueFactory((new PropertyValueFactory<Room, BigDecimal>("price")));
-        roomTypeId.setCellValueFactory((new PropertyValueFactory<Room, Integer>("tid")));
-
-        model = new RoomModel();
-
-        // table view init
-        model.selectAllRooms();
-        roomTableView.setItems(model.getRooms());
-
-        String roomTypeColumns = "id,tname";
-        // combo box init
-        model.selectRoomTypesList2(roomTypeColumns);
-        //roomTypeComboBox.getItems().addAll(model.getRoomTypes());
-        ObservableList<RoomType> roomTypeObservable = model.getRoomTypes();
-        //https://stackoverflow.com/questions/51689888/how-can-i-correctly-add-a-null-item-to-javafxs-combobox
-        roomTypeObservable.add(new RoomType()); // add empty room type
-        roomTypeComboBox.setItems(roomTypeObservable);
     }
 
     private boolean areAllInputsEntered() {

@@ -2,9 +2,17 @@ package com.kyilmaz80.hotel.models;
 
 import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.utils.DBUtils;
+import com.kyilmaz80.hotel.utils.JDBCUtils;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ReservationViewModel {
     private ObservableList<ReservationView> reservations;
@@ -28,26 +36,46 @@ public class ReservationViewModel {
         reservations = (ObservableList<ReservationView>) newList;
     }
 
-    /*
-    public void insertReservation(Map<String,Object> reservationInsertMap) {
-        // column names must be sorted
-        String sqlString = "INSERT INTO Reservation (checkin_date, checkout_date, room_id) VALUES(?,?,?)";
-        // uniq constraint error'de rollback sonrasi id ler 1 artıyor, gap oluyor
-        // https://dba.stackexchange.com/questions/101320/mysql-auto-increment-column-increases-after-insertion-error-occurs
-        try {
-            DBUtils.executeStatement(sqlString, reservationInsertMap);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            ViewUtils.showAlert(e.getMessage());
+    public void selectReservationsBetweenTwo(LocalDate d1, LocalDate d2) {
+        /*
+        ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "ReservationView");
+        reservations = (ObservableList<ReservationView>) newList;
+        //String sqlString = " SELECT * FROM ReservationView WHERE checkin_date BETWEEN ? and ?";
+         */
+        ObservableList<ReservationView> newList  = FXCollections.observableArrayList();
+        String sqlString = "SELECT * FROM ReservationView WHERE checkin_date BETWEEN ? and ?";
+
+
+        ResultSet rs = new DBUtils().getSelectResultSetFromTable(sqlString, d1, d2);
+
+        if (rs == null) {
+            System.out.println(JDBCUtils.error);
+            return;
         }
+
+        try {
+            while(rs.next()) {
+                newList.add(new ReservationView(
+                        rs.getInt("id"),
+                        rs.getInt("room_id"),
+                        rs.getObject ("checkin_date", LocalDateTime.class),
+                        rs.getObject("checkout_date", LocalDateTime.class),
+                        rs.getObject("checkedin_time", LocalDateTime.class),
+                        rs.getObject("checkedout_time", LocalDateTime.class),
+                        rs.getString("customer_name")
+                        ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        reservations = newList;
     }
 
-    public void deleteReservation(int id) {
-        String sqlString = "DELETE FROM Reservation WHERE id = ?";
-        DBUtils.executeStatement(sqlString, id);
+    /*
+     public void selectRoomListFilter2(Map<String, Pair<String,String>> columnsMap) {
+        ObservableList<?> newList  = new DBUtils().selectEntityListFilter(columnsMap, "Room");
+        rooms = (ObservableList<Room>) newList;
     }
-
      */
-
-
 }

@@ -12,6 +12,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,6 +136,27 @@ public class DBUtils {
             PreparedStatement ps = connection.prepareStatement(sqlString);
             ps.setString(1, searchString);
             ps.setString(2, filterColumn);
+            rs = ps.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rs;
+    }
+
+    public ResultSet getSelectResultSetFromTable(String sqlString, LocalDate d1, LocalDate d2) {
+        Connection connection;
+        ResultSet rs;
+        try {
+            connection = JDBCUtils.getConnection();
+            if (connection == null) {
+                ViewUtils.showAlert("DB Connection problem!");
+                return null;
+            }
+
+            PreparedStatement ps = connection.prepareStatement(sqlString);
+            ps.setString(1, d1.toString());
+            ps.setString(2, d2.toString());
             rs = ps.executeQuery();
 
         } catch (SQLException e) {
@@ -265,6 +288,7 @@ public class DBUtils {
             Pair<String, String> columnInfo = entry.getValue();
             String columnValue = columnInfo.getKey();
             String operator = columnInfo.getValue().equals("LIKE") ? " LIKE " : defaultOperator;
+            operator = columnInfo.getValue().equals("BETWEEN") ? " BETWEEN " : operator;
             columnsMap2.put(entry.getKey(), columnValue);
 
             // Use different placeholders for LIKE operator
