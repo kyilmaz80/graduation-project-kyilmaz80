@@ -7,5 +7,6 @@ public class DomainConstants {
     public static final int HOTEL_APP_WINDOW_HEIGHT = 700;
     public static final int HOTEL_APP_WINDOW_WIDTH = 900;
     public static final String ERROR_NO_DATABASE_REGEX = "Unknown database .*";
+    public static final Integer HOTEL_ROOM_MAX_CAPACITY = 2;
 
 }

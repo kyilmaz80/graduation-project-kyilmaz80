@@ -27,6 +27,26 @@ public class RoomModel {
         return rooms;
     }
 
+    public ObservableList<Room> getSingleRooms() {
+        ObservableList<Room> singleRooms = FXCollections.observableArrayList();
+        for (Room room : rooms) {
+            if (room.getCapacity() == 1) {
+                singleRooms.add(room);
+            }
+        }
+        return singleRooms;
+    }
+
+    public ObservableList<Room> getDoubleRooms() {
+        ObservableList<Room> doubleRooms = FXCollections.observableArrayList();
+        for (Room room : rooms) {
+            if (room.getCapacity() == 2) {
+                doubleRooms.add(room);
+            }
+        }
+        return doubleRooms;
+    }
+
     public ObservableList<RoomType> getRoomTypes() {
         return roomTypes;
     }

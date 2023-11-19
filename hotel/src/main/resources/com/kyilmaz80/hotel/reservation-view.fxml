@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import com.kyilmaz80.hotel.utils.DateTimePicker?>
-
+<!-- <?import com.kyilmaz80.hotel.utils.DateTimePicker?> -->
 
 <AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.ReservationViewController">
     <children>
@@ -40,14 +39,12 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_LEFT" layoutX="35.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
             <children>
-            <Label text="Room" />
+            <Label text="Room Capacity" />
+            <Spinner fx:id="roomCapacitySpinner" prefHeight="24.0" prefWidth="62.0" />
+            <Label text="       Room Name" />
             <ComboBox fx:id="roomComboBox" prefWidth="150.0" />
-                <Label text="          Check-in    " />
-                <DateTimePicker fx:id="reservationCheckInDatePicker" prefWidth="180.0" />
-                <Label text="Check-out" />
-                <DateTimePicker fx:id="reservationCheckOutDatePicker" prefWidth="180.0" />
             </children></HBox>
         <TableView fx:id="reservationTableView" layoutY="286.0" prefHeight="414.0" prefWidth="894.0">
             <columns>
@@ -60,17 +57,19 @@
                 <TableColumn fx:id="reservationCustomerName" prefWidth="149.0" text="Customer Name" />
             </columns>
         </TableView>
-      <HBox alignment="CENTER_LEFT" layoutX="282.0" layoutY="164.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="181.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
          <children>
-            <Label text="Checked-in " />
-            <DateTimePicker fx:id="reservationCheckedInDatePicker" prefWidth="180.0" />
+                <Label prefHeight="18.0" prefWidth="57.0" text="Check-in" />
+                <DateTimePicker fx:id="reservationCheckInDatePicker" prefWidth="150.0" />
             <Label text="Check-out" />
-            <DateTimePicker fx:id="reservationCheckedOutDatePicker" prefWidth="180.0" />
+                <DateTimePicker fx:id="reservationCheckOutDatePicker" prefWidth="150.0" />
          </children>
       </HBox>
-      <Button fx:id="addButton" layoutX="282.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
-      <Button fx:id="deleteButton" layoutX="413.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Delete" />
-      <Label layoutX="13.0" layoutY="179.0" text="Customer" />
-      <ComboBox fx:id="customerComboBox" layoutX="85.0" layoutY="173.0" prefWidth="150.0" />
+      <Button fx:id="addButton" layoutX="549.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
+      <Button fx:id="deleteButton" layoutX="679.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Delete" />
+      <Label layoutX="549.0" layoutY="130.0" text="Customer" />
+      <ComboBox fx:id="customerComboBox" layoutX="621.0" layoutY="124.0" prefWidth="150.0" />
+      <Label fx:id="guestsLabel" layoutX="549.0" layoutY="182.0" text="Guest(s)" />
+      <ComboBox fx:id="guestComboBox" disable="true" layoutX="621.0" layoutY="178.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

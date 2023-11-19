@@ -1,5 +1,6 @@
 package com.kyilmaz80.hotel.controllers;
 
+import com.kyilmaz80.hotel.DomainConstants;
 import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.models.*;
 import com.kyilmaz80.hotel.utils.DateTimePicker;
@@ -10,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.SpinnerSkin;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -58,40 +61,69 @@ public class ReservationViewController extends SceneController implements Initia
     private ComboBox<Customer> customerComboBox;
 
     @FXML
+    private ComboBox<Customer> guestComboBox;
+
+    @FXML
+    private Spinner<Integer> roomCapacitySpinner;
+    @FXML
     private DateTimePicker reservationCheckInDatePicker;
 
     @FXML
     private DateTimePicker reservationCheckOutDatePicker;
 
-    @FXML
-    private DateTimePicker reservationCheckedInDatePicker;
-
-    @FXML
-    private DateTimePicker reservationCheckedOutDatePicker;
-
+    private RoomModel roomModel;
     private ReservationModel reservationModel;
     private ReservationViewModel reservationViewModel;
     private ReservationCustomerModel reservationCustomerModel;
 
+    private int selectedRoomCapacity;
 
+
+    private void initRoomComboBox() {
+        ObservableList<Room>  roomObservable = null;
+        if (selectedRoomCapacity == 1) {
+            roomObservable = roomModel.getSingleRooms();
+            guestComboBox.setDisable(true);
+        } else if (selectedRoomCapacity == 2) {
+            roomObservable = roomModel.getDoubleRooms();
+            guestComboBox.setDisable(false);
+        }
+        roomComboBox.setItems(roomObservable);
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
+        roomCapacitySpinner.valueFactoryProperty().set(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
+                DomainConstants.HOTEL_ROOM_MAX_CAPACITY));
+
         //roomNameComboBox
         //String roomColumns = "id,name";
-        RoomModel roomModel = new RoomModel();
+        roomModel = new RoomModel();
         //TODO: non-reserved rooms get
         roomModel.selectAllRooms();
-        ObservableList<Room>  roomObservable = roomModel.getRooms();
-        //roomObservable.add(new Room());
+        //ObservableList<Room>  roomObservable = null;
+
+        selectedRoomCapacity = roomCapacitySpinner.getValue().intValue();
+
+        //roomObservable = roomModel.getRooms();
+        /*
+        if (selectedRoomCapacity == 1) {
+            roomObservable = roomModel.getSingleRooms();
+        } else if (selectedRoomCapacity == 2) {
+            roomObservable = roomModel.getDoubleRooms();
+        }
         roomComboBox.setItems(roomObservable);
+         */
+        initRoomComboBox();
 
         //customerComboBox
         CustomerModel customerModel = new CustomerModel();
         customerModel.selectAllCustomers();
         ObservableList<Customer> customerObservable = customerModel.getCustomers();
         customerComboBox.setItems(customerObservable);
+        guestComboBox.setItems(customerObservable);
+
 
         // map to ReservationView
         reservationId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("id"));
@@ -114,6 +146,19 @@ public class ReservationViewController extends SceneController implements Initia
 
         reservationCustomerModel = new ReservationCustomerModel();
         reservationCustomerModel.selectAllReservationCustomers();
+
+        roomCapacitySpinner.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //from chatgpt
+                Spinner<Integer> spinner = (Spinner<Integer>) mouseEvent.getSource();
+                // Get the selected value from the spinner's value factory
+                int selectedValue = spinner.getValue();
+                System.out.println("Selected Value: " + selectedValue);
+                selectedRoomCapacity = selectedValue;
+                initRoomComboBox();
+            }
+        });
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -226,8 +271,11 @@ public class ReservationViewController extends SceneController implements Initia
             @Override
             public void handle(ActionEvent actionEvent) {
                 var comboObj = (Room) roomComboBox.getValue();
-                System.out.println("On combo selected: " + " id: " +  comboObj.getId()  +
-                        " name: " + roomComboBox.getValue());
+                if (comboObj != null) {
+                    System.out.println("On combo selected: " + " id: " +  comboObj.getId()  +
+                            " name: " + roomComboBox.getValue());
+                }
+
                 System.out.println("Are all inputs entered? " + areAllInputsEntered());
                 if(areAllInputsEntered()) {
                     addButton.setDisable(false);
@@ -248,7 +296,8 @@ public class ReservationViewController extends SceneController implements Initia
         long days = fromDateTime.until(reservationCheckOut, ChronoUnit.DAYS);
         System.out.println("Reservation days: " + days);
         System.out.println("Reservation hours: " + hours);
-        if (days < 0) {
+
+        if (days < 0 || (days == 0 && hours == 0)) {
             ViewUtils.showAlert("Check-out must be greater than Check-in!");
             return false;
         }
