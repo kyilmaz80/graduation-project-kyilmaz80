@@ -13,35 +13,33 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class ReservationController extends SceneController implements Initializable {
+public class ReservationViewController extends SceneController implements Initializable {
 
     @FXML
-    private TableView<Reservation> reservationTableView;
+    private TableView<ReservationView> reservationTableView;
 
     @FXML
-    private TableColumn<Reservation, Integer> reservationId;
+    private TableColumn<ReservationView, Integer> reservationId;
 
     @FXML
-    private TableColumn<Reservation, Integer> reservationRoomId;
+    private TableColumn<ReservationView, Integer> reservationRoomId;
 
     @FXML
-    private TableColumn<Reservation, Timestamp>  reservationCheckInDate;
+    private TableColumn<ReservationView, Timestamp>  reservationCheckInDate;
 
     @FXML
-    private TableColumn<Reservation, Timestamp> reservationCheckOutDate;
+    private TableColumn<ReservationView, Timestamp> reservationCheckOutDate;
 
     @FXML
-    private TableColumn<Reservation, Timestamp> reservationCheckedInDate;
+    private TableColumn<ReservationView, Timestamp> reservationCheckedInDate;
 
     @FXML
-    private TableColumn<Reservation, Timestamp> reservationCheckedOutDate;
+    private TableColumn<ReservationView, Timestamp> reservationCheckedOutDate;
 
     @FXML
     private TableColumn<Customer, String> reservationCustomerName;
@@ -59,18 +57,19 @@ public class ReservationController extends SceneController implements Initializa
     private ComboBox<Customer> customerComboBox;
 
     @FXML
-    private DatePicker reservationCheckInDatePicker;
+    private DateTimePicker reservationCheckInDatePicker;
 
     @FXML
-    private DatePicker reservationCheckOutDatePicker;
+    private DateTimePicker reservationCheckOutDatePicker;
 
     @FXML
-    private DatePicker reservationCheckedInDatePicker;
+    private DateTimePicker reservationCheckedInDatePicker;
 
     @FXML
-    private DatePicker reservationCheckedOutDatePicker;
+    private DateTimePicker reservationCheckedOutDatePicker;
 
     private ReservationModel reservationModel;
+    private ReservationViewModel reservationViewModel;
     private ReservationCustomerModel reservationCustomerModel;
 
 
@@ -93,24 +92,27 @@ public class ReservationController extends SceneController implements Initializa
         ObservableList<Customer> customerObservable = customerModel.getCustomers();
         customerComboBox.setItems(customerObservable);
 
-        // map to reservation_view
-        reservationId.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("id"));
-        reservationRoomId.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("room_id"));
-        reservationCheckInDate.setCellValueFactory(new PropertyValueFactory<Reservation, Timestamp>("checkin_date"));
-        reservationCheckOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, Timestamp>("checkout_date"));
-        reservationCheckedInDate.setCellValueFactory(new PropertyValueFactory<Reservation, Timestamp>("checkedin_time"));
-        reservationCheckedOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, Timestamp>("checkedout_time"));
+        // map to ReservationView
+        reservationId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("id"));
+        reservationRoomId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("room_id"));
+        reservationCheckInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkin_date"));
+        reservationCheckOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkout_date"));
+        reservationCheckedInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedin_time"));
+        reservationCheckedOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedout_time"));
         reservationCustomerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customer_name"));
 
+
         reservationModel = new ReservationModel();
+        reservationModel.selectAllReservations();
+
+        reservationViewModel = new ReservationViewModel();
 
         // table view init
-        reservationModel.selectAllReservations();
-        reservationTableView.setItems(reservationModel.getReservations());
+        reservationViewModel.selectAllReservations();
+        reservationTableView.setItems(reservationViewModel.getReservations());
 
         reservationCustomerModel = new ReservationCustomerModel();
         reservationCustomerModel.selectAllReservationCustomers();
-
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -141,8 +143,8 @@ public class ReservationController extends SceneController implements Initializa
                 var selectedCustomerId = selectedCustomer.getId();
                 System.out.println("Mapping customer id " + selectedCustomerId);
 
-                LocalDate reservationCheckIn = reservationCheckInDatePicker.getValue();
-                LocalDate reservationCheckOut = reservationCheckOutDatePicker.getValue();
+                LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
+                LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
 
                 Map<String, Object> reservationInsertMap = new TreeMap<>();
                 reservationInsertMap.put("room_id", selectedRoomId);
@@ -164,8 +166,10 @@ public class ReservationController extends SceneController implements Initializa
                 System.out.println(reservationCheckIn);
                 System.out.println(reservationCheckOut);
 
+                //reservationViewModel.insertReservation(reservationInsertMap);
                 reservationModel.insertReservation(reservationInsertMap);
                 reservationModel.selectAllReservations();
+                //reservationViewModel.selectAllReservations();
 
                 Map<String, Object> reservationCustomerInsertMap = new TreeMap<>();
 
@@ -175,17 +179,44 @@ public class ReservationController extends SceneController implements Initializa
                 if (reservations.size() != 0) {
                     lastReservation = reservations.getLast();
                 }
-                int newReservationId = 1;
+                int lastReservationId = -1;
                 if (lastReservation != null) {
-                    newReservationId = lastReservation.getId() + 1;
+                    lastReservationId = lastReservation.getId();
                 }
                 reservationCustomerInsertMap.put("customer_id", String.valueOf(selectedCustomerId));
-                reservationCustomerInsertMap.put("reservation_id", String.valueOf(newReservationId));
+                reservationCustomerInsertMap.put("reservation_id", String.valueOf(lastReservationId));
 
                 reservationCustomerModel.insertReservationCustomer(reservationCustomerInsertMap);
                 reservationCustomerModel.selectAllReservationCustomers();
                 reservationModel.selectAllReservations();
-                reservationTableView.setItems(reservationModel.getReservations());
+                reservationViewModel.selectAllReservations();
+                reservationTableView.setItems(reservationViewModel.getReservations());
+
+            }
+        });
+
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("On click Delete");
+                var selected = reservationTableView.getSelectionModel().getSelectedItem();
+                if (selected == null) {
+                    ViewUtils.showAlert("No reservation item selected!");
+                    return;
+                }
+                System.out.println("selected: " + selected);
+                var selectedId = selected.getId();
+                System.out.println("Deleting id " + selectedId);
+
+                reservationCustomerModel.deleteReservationCustomerByReservationId(selectedId);
+                reservationCustomerModel.selectAllReservationCustomers();
+                //reservationViewModel.deleteReservation(selectedId);
+                reservationModel.deleteReservation(selectedId);
+                reservationViewModel.selectAllReservations();
+                reservationModel.selectAllReservations();
+                reservationTableView.setItems(reservationViewModel.getReservations());
+
+
 
             }
         });

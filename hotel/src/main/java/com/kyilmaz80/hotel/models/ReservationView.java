@@ -2,31 +2,36 @@ package com.kyilmaz80.hotel.models;
 
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class ReservationView {
+    //reservation_view mapped
     private int id;
     private int room_id;
     private LocalDateTime checkin_date;
     private LocalDateTime checkout_date;
     private LocalDateTime checkedin_time;
     private LocalDateTime checkedout_time;
+    private String customer_name;
 
-    public Reservation(int id, int room_id, LocalDateTime checkin_date, LocalDateTime checkout_date,
-                           LocalDateTime checkedin_time, LocalDateTime checkedout_time) {
+    //TODO: Reservation extend case'inde DBUtils'de clazz da extend edilen metot erisiledi!
+    public ReservationView(int id, int room_id, LocalDateTime checkin_date, LocalDateTime checkout_date,
+                           LocalDateTime checkedin_time, LocalDateTime checkedout_time, String customer_name) {
         this.id = id;
         this.room_id = room_id;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.checkedin_time = checkedin_time;
         this.checkedout_time = checkedout_time;
+        this.customer_name = customer_name;
     }
 
-    public Reservation() {
+    public ReservationView() {
         this.id = -1;
         this.room_id = 0;
         this.checkin_date = null;
         this.checkout_date = null;
         this.checkedin_time = null;
         this.checkedout_time = null;
+        this.customer_name = "";
     }
 
     public int getId() {
@@ -77,4 +82,11 @@ public class Reservation {
         this.checkedout_time = checkedout_time;
     }
 
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
 }

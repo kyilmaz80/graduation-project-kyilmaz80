@@ -216,13 +216,7 @@ public class DBUtils {
 
         try {
             while (rs.next()) {
-                //Poor mans solution for view entity with two joined models
-                //do now know best practice?
-                if (tableName.equalsIgnoreCase("reservation_view")) {
-                    className = "com.kyilmaz80.hotel.models." + "Reservation";
-                } else {
-                    className = "com.kyilmaz80.hotel.models." + tableName;
-                }
+                className = "com.kyilmaz80.hotel.models." + tableName;
                 Class<?> clazz;
                 Field[] fields;
                 Object entity = null;

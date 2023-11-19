@@ -1,4 +1,4 @@
-CREATE VIEW `upod_otel`.`reservation_view` AS
+CREATE VIEW `upod_otel`.`ReservationView` AS
 SELECT r.id, r.room_id, r.checkin_date, r.checkout_date,
   r.checkedin_time, r.checkedout_time, c.full_name as customer_name
   FROM `Reservation` as r

@@ -39,4 +39,14 @@ public class ReservationCustomerModel {
             ViewUtils.showAlert(e.getMessage());
         }
     }
+
+    public void deleteReservationCustomer(int id) {
+        String sqlString = "DELETE FROM ReservationCustomer WHERE id = ?";
+        DBUtils.executeStatement(sqlString, id);
+    }
+
+    public void deleteReservationCustomerByReservationId(int id) {
+        String sqlString = "DELETE FROM ReservationCustomer WHERE reservation_id = ?";
+        DBUtils.executeStatement(sqlString, id);
+    }
 }

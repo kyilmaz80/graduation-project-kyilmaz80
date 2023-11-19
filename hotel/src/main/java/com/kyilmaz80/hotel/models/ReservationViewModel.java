@@ -2,31 +2,33 @@ package com.kyilmaz80.hotel.models;
 
 import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.utils.DBUtils;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Map;
 
-public class ReservationModel {
-    private ObservableList<Reservation> reservations;
+public class ReservationViewModel {
+    private ObservableList<ReservationView> reservations;
 
-    public ObservableList<Reservation> getReservations() {
+    public ObservableList<ReservationView> getReservations() {
         return reservations;
     }
 
-    public ReservationModel() {
-        reservations = FXCollections.observableArrayList();
-    }
-
-    public void setReservations(ObservableList<Reservation> reservations) {
+    public void setReservations(ObservableList<ReservationView> reservations) {
         this.reservations = reservations;
     }
 
-    public void selectAllReservations() {
-        ObservableList<?> newList = new DBUtils().selectEntityList("*", "Reservation");
-        reservations = (ObservableList<Reservation>) newList;
+    public void selectAllReservations(String columnsStr) {
+        ObservableList<?> newList = new DBUtils().selectEntityList(columnsStr, "ReservationView");
+        reservations = (ObservableList<ReservationView>) newList;
     }
 
+
+    public void selectAllReservations() {
+        ObservableList<?> newList = new DBUtils().selectEntityList("*", "ReservationView");
+        reservations = (ObservableList<ReservationView>) newList;
+    }
+
+    /*
     public void insertReservation(Map<String,Object> reservationInsertMap) {
         // column names must be sorted
         String sqlString = "INSERT INTO Reservation (checkin_date, checkout_date, room_id) VALUES(?,?,?)";
@@ -45,6 +47,7 @@ public class ReservationModel {
         DBUtils.executeStatement(sqlString, id);
     }
 
+     */
 
 
 }
