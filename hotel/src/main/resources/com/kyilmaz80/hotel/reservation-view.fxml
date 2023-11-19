@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import com.kyilmaz80.hotel.utils.DateTimePicker?>
+
 <AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #BBBBAA;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.ReservationController">
     <children>
         <HBox alignment="CENTER_LEFT" layoutX="79.0" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #8fbc8f;" AnchorPane.bottomAnchor="659.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -42,9 +44,9 @@
             <Label text="Room" />
             <ComboBox fx:id="roomComboBox" prefWidth="150.0" />
                 <Label text="          Check-in    " />
-                <DatePicker fx:id="reservationCheckInDatePicker" />
+                <DateTimePicker fx:id="reservationCheckInDatePicker" />
                 <Label text="Check-out" />
-                <DatePicker fx:id="reservationCheckOutDatePicker" />
+                <DateTimePicker fx:id="reservationCheckOutDatePicker" />
             </children></HBox>
         <TableView fx:id="reservationTableView" layoutY="286.0" prefHeight="414.0" prefWidth="894.0">
             <columns>
@@ -60,9 +62,9 @@
       <HBox alignment="CENTER_LEFT" layoutX="282.0" layoutY="164.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
          <children>
             <Label text="Checked-in " />
-            <DatePicker fx:id="reservationCheckedInDatePicker" />
+            <DateTimePicker fx:id="reservationCheckedInDatePicker" />
             <Label text="Check-out" />
-            <DatePicker fx:id="reservationCheckedOutDatePicker" />
+            <DateTimePicker fx:id="reservationCheckedOutDatePicker" />
          </children>
       </HBox>
       <Button fx:id="addButton" layoutX="282.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
