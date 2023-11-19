@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -240,6 +241,22 @@ public class ReservationViewController extends SceneController implements Initia
     }
 
     private boolean validateInputs() {
+        LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
+        LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
+        LocalDateTime fromDateTime = LocalDateTime.from(reservationCheckIn);
+        long hours = fromDateTime.until(reservationCheckOut, ChronoUnit.HOURS);
+        long days = fromDateTime.until(reservationCheckOut, ChronoUnit.DAYS);
+        System.out.println("Reservation days: " + days);
+        System.out.println("Reservation hours: " + hours);
+        if (days < 0) {
+            ViewUtils.showAlert("Check-out must be greater than Check-in!");
+            return false;
+        }
+        if (days <=1 && hours < 24 ) {
+            ViewUtils.showAlert("No hour based Check-in!");
+            return false;
+        }
+
         return true;
     }
 
