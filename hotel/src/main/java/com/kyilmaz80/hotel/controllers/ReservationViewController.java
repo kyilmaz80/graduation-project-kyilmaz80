@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.SpinnerSkin;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -31,7 +30,10 @@ public class ReservationViewController extends SceneController implements Initia
     private TableColumn<ReservationView, Integer> reservationId;
 
     @FXML
-    private TableColumn<ReservationView, Integer> reservationRoomId;
+    private TableColumn<ReservationView, String> reservationRoomId;
+
+    @FXML
+    private TableColumn<ReservationView, String> reservationRoomName;
 
     @FXML
     private TableColumn<ReservationView, Timestamp>  reservationCheckInDate;
@@ -128,7 +130,8 @@ public class ReservationViewController extends SceneController implements Initia
 
         // map to ReservationView
         reservationId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("id"));
-        reservationRoomId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("room_id"));
+        reservationRoomId.setCellValueFactory(new PropertyValueFactory<ReservationView, String>("room_id"));
+        reservationRoomName.setCellValueFactory(new PropertyValueFactory<ReservationView, String>("room_name"));
         reservationCheckInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkin_date"));
         reservationCheckOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkout_date"));
         reservationCheckedInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedin_time"));
@@ -357,6 +360,11 @@ public class ReservationViewController extends SceneController implements Initia
         System.out.println("Reservation days: " + daysDiff);
         System.out.println("Reservation hours: " + hoursDiff);
 
+        if (reservationCheckIn.isBefore(LocalDateTime.now())) {
+            ViewUtils.showAlert("Check-in must be greater than " + LocalDateTime.now());
+            return false;
+        }
+
         if (daysDiff < 0 || (daysDiff == 0 && hoursDiff == 0)) {
             ViewUtils.showAlert("Check-out must be greater than Check-in!");
             return false;
@@ -386,7 +394,9 @@ public class ReservationViewController extends SceneController implements Initia
             if (selectedRoomId == reservation.getRoom_id()) {
                 a = reservation.getCheckin_date();
                 b = reservation.getCheckout_date();
+
                 if (reservation.getCheckedin_time() != null && reservation.getCheckedout_time() != null) {
+                    System.out.println("Room " + reservation.getRoom_id() + " available. Already checked-out." );
                     return true;
                 }
                 System.out.println("Reservation Checkin in db: " + a);

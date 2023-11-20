@@ -58,6 +58,7 @@ public class ReservationViewModel {
                 newList.add(new ReservationView(
                         rs.getInt("id"),
                         rs.getInt("room_id"),
+                        rs.getString("room_name"),
                         rs.getObject ("checkin_date", LocalDateTime.class),
                         rs.getObject("checkout_date", LocalDateTime.class),
                         rs.getObject("checkedin_time", LocalDateTime.class),

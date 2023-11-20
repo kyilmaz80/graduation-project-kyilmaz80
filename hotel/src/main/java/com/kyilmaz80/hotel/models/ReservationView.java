@@ -6,6 +6,16 @@ public class ReservationView {
     //reservation_view mapped
     private int id;
     private int room_id;
+
+    public String getRoom_name() {
+        return room_name;
+    }
+
+    public void setRoom_name(String room_name) {
+        this.room_name = room_name;
+    }
+
+    private String room_name;
     private LocalDateTime checkin_date;
     private LocalDateTime checkout_date;
     private LocalDateTime checkedin_time;
@@ -13,10 +23,11 @@ public class ReservationView {
     private String customer_name;
 
     //TODO: Reservation extend case'inde DBUtils'de clazz da extend edilen metot erisiledi!
-    public ReservationView(int id, int room_id, LocalDateTime checkin_date, LocalDateTime checkout_date,
+    public ReservationView(int id, int room_id, String room_name, LocalDateTime checkin_date, LocalDateTime checkout_date,
                            LocalDateTime checkedin_time, LocalDateTime checkedout_time, String customer_name) {
         this.id = id;
         this.room_id = room_id;
+        this.room_name = room_name;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.checkedin_time = checkedin_time;
@@ -26,6 +37,7 @@ public class ReservationView {
 
     public ReservationView() {
         this.id = -1;
+        this.room_name = "";
         this.room_id = 0;
         this.checkin_date = null;
         this.checkout_date = null;

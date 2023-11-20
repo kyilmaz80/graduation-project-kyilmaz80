@@ -49,7 +49,10 @@
         <TableView fx:id="reservationTableView" layoutY="338.0" prefHeight="362.0" prefWidth="894.0">
             <columns>
                 <TableColumn fx:id="reservationId" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="reservationRoomId" prefWidth="98.0" text="Room" />
+                <TableColumn fx:id="reservationRoomId" prefWidth="98.0" text="RoomId">
+               <columns>
+                  <TableColumn fx:id="reservationRoomName" prefWidth="75.0" text="Name" />
+               </columns></TableColumn>
                 <TableColumn fx:id="reservationCheckInDate" prefWidth="125.0" text="Check-in Date" />
                 <TableColumn fx:id="reservationCheckOutDate" prefWidth="130.0" text="Check-out Date" />
                 <TableColumn fx:id="reservationCheckedInDate" prefWidth="114.0" text="Checked-in" />

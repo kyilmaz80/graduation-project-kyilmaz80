@@ -40,6 +40,9 @@ public class HotelController extends SceneController implements Initializable {
     private TableColumn<ReservationView, Integer> reservationRoomId;
 
     @FXML
+    private TableColumn<ReservationView, String> reservationRoomName;
+
+    @FXML
     private TableColumn<ReservationView, Timestamp>  reservationCheckInDate;
 
     @FXML
@@ -90,18 +93,18 @@ public class HotelController extends SceneController implements Initializable {
         // map to ReservationView
         reservationId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("id"));
         reservationRoomId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("room_id"));
+        reservationRoomName.setCellValueFactory(new PropertyValueFactory<ReservationView, String>("room_name"));
         reservationCheckInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkin_date"));
         reservationCheckOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkout_date"));
         reservationCheckedInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedin_time"));
         reservationCheckedOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedout_time"));
         reservationCustomerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customer_name"));
 
-
-
         reservationViewModel = new ReservationViewModel();
         // table view init
         reservationViewModel.selectAllReservations();
         reservationTableView.setItems(reservationViewModel.getReservations());
+        reservationTableView.refresh();
 
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
