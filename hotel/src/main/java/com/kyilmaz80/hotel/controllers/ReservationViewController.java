@@ -386,6 +386,9 @@ public class ReservationViewController extends SceneController implements Initia
             if (selectedRoomId == reservation.getRoom_id()) {
                 a = reservation.getCheckin_date();
                 b = reservation.getCheckout_date();
+                if (reservation.getCheckedin_time() != null && reservation.getCheckedout_time() != null) {
+                    return true;
+                }
                 System.out.println("Reservation Checkin in db: " + a);
                 System.out.println("Reservation Checkout in db: " + b);
                 System.out.println("Reservation check in in question: " + d);
