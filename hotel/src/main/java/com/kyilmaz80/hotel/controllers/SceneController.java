@@ -35,7 +35,7 @@ public class SceneController implements Initializable {
     protected String selectedLabel;
 
     public void setPreScene(Scene preScene) {
-        //System.out.println("prescene: " + backButton.getScene());
+        System.out.println("prescene: " + backButton.getScene());
         this.preScene = preScene;
     }
 
@@ -84,7 +84,7 @@ public class SceneController implements Initializable {
     }
 
     @FXML
-    private void openScene(Event event) {
+    protected void openScene(Event event) {
         String viewName = selectedLabel.toLowerCase().
                 replaceAll("label", "").
                 replaceAll("button", "");
@@ -100,6 +100,27 @@ public class SceneController implements Initializable {
                 DomainConstants.HOTEL_APP_WINDOW_WIDTH,
                 DomainConstants.HOTEL_APP_WINDOW_HEIGHT,
                 currentScene);
+    }
+
+    @FXML
+    protected void openScene2(Event event, Object obj) {
+        String viewName = selectedLabel.toLowerCase().
+                replaceAll("label", "").
+                replaceAll("button", "");
+        //String viewName = "reservation";
+        String viewFile = viewName + "-view.fxml";
+        String titleName = StringUtils.toUpperFirstChar(viewName);
+        System.out.println("view file: " + viewFile);
+        Scene currentScene = anchorPane.getScene();
+        System.out.println("current scene: " + currentScene);
+        System.out.println("obj: " + obj);
+        ViewUtils.changeScene2(event,
+                viewFile,
+                titleName,
+                DomainConstants.HOTEL_APP_WINDOW_WIDTH,
+                DomainConstants.HOTEL_APP_WINDOW_HEIGHT,
+                currentScene,
+                obj);
     }
 
     @Override

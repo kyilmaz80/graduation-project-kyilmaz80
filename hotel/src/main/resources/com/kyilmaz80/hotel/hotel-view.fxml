@@ -63,9 +63,9 @@
       </TableView>
       <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="660.0" prefHeight="41.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
+            <Button fx:id="reservationServicesButton" mnemonicParsing="false" onMouseEntered="#onEnterButton" prefHeight="24.0" prefWidth="101.0" text="EDIT" />
             <Button fx:id="reservationButton" mnemonicParsing="false" onMouseClicked="#openScene" onMouseEntered="#onEnterButton" prefHeight="24.0" prefWidth="160.0" text="NEW RESERVATION" />
-            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="DELETE" />
          </children>
       </HBox>
    </children>

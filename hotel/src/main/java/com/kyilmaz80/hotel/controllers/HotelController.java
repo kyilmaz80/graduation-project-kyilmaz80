@@ -2,16 +2,15 @@ package com.kyilmaz80.hotel.controllers;
 
 import com.kyilmaz80.hotel.DomainConstants;
 import com.kyilmaz80.hotel.ViewUtils;
-import com.kyilmaz80.hotel.models.Customer;
-import com.kyilmaz80.hotel.models.ReservationModel;
-import com.kyilmaz80.hotel.models.ReservationView;
-import com.kyilmaz80.hotel.models.ReservationViewModel;
+import com.kyilmaz80.hotel.models.*;
 import com.kyilmaz80.hotel.utils.DateTimePicker;
 import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.net.URL;
@@ -71,6 +71,12 @@ public class HotelController extends SceneController implements Initializable {
 
     @FXML
     private Button reservationButton;
+
+    @FXML
+    private Button reservationServicesButton;
+
+    @FXML
+    private Button deleteButton;
 
     @FXML
     private DatePicker reservationFromDate;
@@ -146,6 +152,40 @@ public class HotelController extends SceneController implements Initializable {
                 reservationTableView.setItems(reservationViewModel.getReservations());
             }
         });
+
+        //edit button
+        reservationServicesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("On click Edit");
+                var selected = reservationTableView.getSelectionModel().getSelectedItem();
+                if (selected == null) {
+                    ViewUtils.showAlert("No reservation item selected!");
+                    return;
+                }
+                System.out.println("selected: " + selected);
+                var selectedId = selected.getId();
+                System.out.println("Editing id " + selectedId);
+                //HotelController.super.setMessage("id = " + selectedId);
+
+
+                ReservationService reservationService = new ReservationService();
+                reservationService.setReservation_id(selectedId);
+
+                HotelController.super.openScene2(actionEvent, reservationService);
+                //Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                /*
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                 */
+
+            }
+        });
+
+
+
+
 
 
     }

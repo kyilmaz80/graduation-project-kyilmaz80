@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kyilmaz80.hotel.controllers.ReservationServiceController">
+    <children>
+        <SplitPane dividerPositions="0.40257879656160456" layoutX="273.0" layoutY="111.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" onMouseClicked="#onClickAnchor" prefHeight="100.0" prefWidth="160.0">
+                    <children>
+                        <ToolBar layoutX="172.0" layoutY="6.0" prefHeight="42.0" prefWidth="898.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
+                            </items>
+                        </ToolBar>
+                        <Label layoutX="341.0" layoutY="73.0" text="Add Reservation Service" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="serviceNameTextField" layoutX="281.0" layoutY="141.0" prefHeight="33.0" prefWidth="232.0" promptText="Service" />
+                        <Label layoutX="226.0" layoutY="148.0" text="Name">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="addButton" layoutX="281.0" layoutY="211.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
+                        <Button fx:id="deleteButton" layoutX="421.0" layoutY="211.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
+                    </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
+                    <children>
+                        <TableView fx:id="serviceTableView" editable="true" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="614.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn fx:id="serviceId" prefWidth="75.0" text="ID" />
+                                <TableColumn fx:id="serviceName" prefWidth="208.0" text="Name" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

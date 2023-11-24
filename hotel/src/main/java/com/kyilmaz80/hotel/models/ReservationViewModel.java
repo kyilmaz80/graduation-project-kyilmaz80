@@ -17,6 +17,11 @@ import java.util.TreeMap;
 public class ReservationViewModel {
     private ObservableList<ReservationView> reservations;
 
+
+    public ReservationViewModel() {
+        reservations = FXCollections.observableArrayList();
+    }
+
     public ObservableList<ReservationView> getReservations() {
         return reservations;
     }

@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -109,6 +110,7 @@ public class ReservationViewController extends SceneController implements Initia
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+
 
         roomCapacitySpinner.valueFactoryProperty().set(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 DomainConstants.HOTEL_ROOM_MAX_CAPACITY));
@@ -360,7 +362,7 @@ public class ReservationViewController extends SceneController implements Initia
         System.out.println("Reservation days: " + daysDiff);
         System.out.println("Reservation hours: " + hoursDiff);
 
-        if (reservationCheckIn.isBefore(LocalDateTime.now())) {
+        if (reservationCheckIn.toLocalDate().getDayOfMonth() < LocalDate.now().getDayOfMonth()) {
             ViewUtils.showAlert("Check-in must be greater than " + LocalDateTime.now());
             return false;
         }
@@ -389,6 +391,7 @@ public class ReservationViewController extends SceneController implements Initia
         LocalDateTime a;
         LocalDateTime b;
         LocalDateTime d = reservationCheckIn;
+        LocalDateTime e = reservationCheckOut;
 
         for(Reservation reservation : reservations) {
             if (selectedRoomId == reservation.getRoom_id()) {
@@ -405,6 +408,11 @@ public class ReservationViewController extends SceneController implements Initia
                 if(d.isEqual(a)) {
                     return false;
                 }
+
+                if (d.isBefore(a) && e.isBefore(b) & e.isAfter(a)) {
+                    return false;
+                }
+
                 if (d.isAfter(a) && d.isBefore(b)) {
                 //if (a.compareTo(d) * d.compareTo(b) >= 0) {
                     return false;
