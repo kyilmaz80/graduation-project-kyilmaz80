@@ -32,4 +32,13 @@ public class Service {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        if (id == -1 && name.isEmpty()) {
+            return "";
+        } else {
+            return this.getName();
+        }
+    }
 }

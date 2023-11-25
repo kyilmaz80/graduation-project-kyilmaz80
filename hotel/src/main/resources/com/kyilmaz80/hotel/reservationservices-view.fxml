@@ -8,33 +8,43 @@
     <children>
         <SplitPane dividerPositions="0.40257879656160456" layoutX="273.0" layoutY="111.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" onMouseClicked="#onClickAnchor" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" onMouseClicked="#onClickAnchor" prefHeight="294.0" prefWidth="898.0">
                     <children>
                         <ToolBar layoutX="172.0" layoutY="6.0" prefHeight="42.0" prefWidth="898.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
                                 <Button fx:id="backButton" mnemonicParsing="false" onAction="#onClickBack" style="-fx-border-color: #008000;" text="Back" />
                             </items>
                         </ToolBar>
-                        <Label layoutX="341.0" layoutY="73.0" text="Add Reservation Service" textAlignment="CENTER">
+                        <Label layoutX="307.0" layoutY="74.0" text="Add Reservation Service" textAlignment="CENTER">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="serviceNameTextField" layoutX="281.0" layoutY="141.0" prefHeight="33.0" prefWidth="232.0" promptText="Service" />
-                        <Label layoutX="226.0" layoutY="148.0" text="Name">
+                        <Label layoutX="281.0" layoutY="130.0" text="Service">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Button fx:id="addButton" layoutX="281.0" layoutY="211.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
-                        <Button fx:id="deleteButton" layoutX="421.0" layoutY="211.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
+                        <Button fx:id="addButton" layoutX="281.0" layoutY="220.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Add" />
+                        <Button fx:id="deleteButton" layoutX="435.0" layoutY="220.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" text="Delete" />
+                  <ComboBox fx:id="serviceComboBox" layoutX="360.0" layoutY="127.0" prefWidth="150.0" />
+                  <Spinner fx:id="reservationServiceQuantitySpinner" layoutX="543.0" layoutY="127.0" prefHeight="24.0" prefWidth="62.0" />
+                  <Label layoutX="281.0" layoutY="174.0" text="Price">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="reservationServicePriceTextField" layoutX="361.0" layoutY="171.0" prefHeight="24.0" prefWidth="150.0" />
                     </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="898.0">
                     <children>
-                        <TableView fx:id="serviceTableView" editable="true" layoutX="46.0" layoutY="43.0" prefHeight="414.0" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="614.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="reservationServiceTableView" editable="true" layoutX="46.0" prefHeight="414.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn fx:id="serviceId" prefWidth="75.0" text="ID" />
-                                <TableColumn fx:id="serviceName" prefWidth="208.0" text="Name" />
+                                <TableColumn fx:id="reservationServiceId" prefWidth="75.0" text="ID" />
+                                <TableColumn fx:id="reservationServiceReservationId" prefWidth="117.0" text="Reservation ID" />
+                        <TableColumn fx:id="reservationServiceServiceId" prefWidth="112.0" text="Service ID" />
+                        <TableColumn fx:id="reservationServiceUnitPrice" prefWidth="111.0" text="Unit Price" />
+                        <TableColumn fx:id="reservationServiceQuantity" prefWidth="75.0" text="Quantity" />
                             </columns>
                         </TableView>
                     </children>
