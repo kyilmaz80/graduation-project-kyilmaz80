@@ -13,6 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,13 +68,9 @@ public class FeatureController extends SceneController implements Initializable 
                 System.out.println("On click Filter");
                 String featureName = featureNameTextField.getText();
                 String featurePrice = featurePriceTextField.getText();
-                if (!StringUtils.inputValid1(featureName)) {
-                    System.err.println("FeatureName Input not valid!");
-                    return;
-                }
 
-                if (!StringUtils.inputValid2(featurePrice)) {
-                    System.err.println("FeaturePrice Input not valid!");
+                if (!validateInputs()) {
+                    System.err.println("Inputs not valid!");
                     return;
                 }
 
@@ -132,6 +130,28 @@ public class FeatureController extends SceneController implements Initializable 
             }
         });
 
+    }
+
+    private boolean validateInputs() {
+
+        if (!StringUtils.inputValid1(featureNameTextField.getText())) {
+            featureNameTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
+            System.err.println("FeatureName Input not valid!");
+            return false;
+        }
+
+        featureNameTextField.setBorder(Border.EMPTY);
+
+        if (!StringUtils.inputValid2(featurePriceTextField.getText())) {
+            featurePriceTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
+            System.err.println("FeaturePrice Input not valid!");
+            return false;
+        }
+
+
+        featurePriceTextField.setBorder(Border.EMPTY);
+
+        return true;
     }
 
     /*

@@ -4,6 +4,7 @@ import com.kyilmaz80.hotel.DomainConstants;
 import com.kyilmaz80.hotel.ViewUtils;
 import com.kyilmaz80.hotel.models.*;
 
+import com.kyilmaz80.hotel.utils.StringUtils;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -119,6 +122,7 @@ public class ReservationServiceController extends SceneController implements Ini
             public void handle(ActionEvent actionEvent) {
                 if (!validateInputs()) {
                     System.out.println("Inputs not valid!");
+                    ViewUtils.showAlert("Inputs not valid!");
                     return;
                 }
                 System.out.println("On click Add");
@@ -181,6 +185,20 @@ public class ReservationServiceController extends SceneController implements Ini
     }
 
     private boolean validateInputs() {
+
+        String reservationServicePrice = reservationServicePriceTextField.getText();
+
+        if (reservationServicePrice.isEmpty() || !StringUtils.inputValid2(reservationServicePrice)) {
+            reservationServicePriceTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
+            return false;
+        }
+
+        if (serviceComboBox.getValue() == null) {
+            return false;
+        }
+
+        reservationServicePriceTextField.setBorder(Border.EMPTY);
+
         return true;
     }
 

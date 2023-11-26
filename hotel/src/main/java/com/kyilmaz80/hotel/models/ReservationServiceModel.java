@@ -51,4 +51,9 @@ public class ReservationServiceModel {
         String sqlString = "DELETE FROM ReservationService WHERE id = ?";
         DBUtils.executeStatement(sqlString, id);
     }
+
+    public void deleteReservationServiceByReservationId(int id) {
+        String sqlString = "DELETE FROM ReservationService WHERE reservation_id = ?";
+        DBUtils.executeStatement(sqlString, id);
+    }
 }

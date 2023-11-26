@@ -34,16 +34,16 @@
                     </font>
                 </Label>
             </children></HBox>
-        <Label alignment="CENTER" layoutX="311.0" layoutY="64.0" prefHeight="41.0" prefWidth="204.0" text="Add Reservation">
+        <Label alignment="CENTER" layoutX="311.0" layoutY="54.0" prefHeight="41.0" prefWidth="204.0" text="Add Reservation">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="115.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="103.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
             <children>
             <Label text="Room Capacity" />
             <Spinner fx:id="roomCapacitySpinner" prefHeight="24.0" prefWidth="62.0" />
-            <Label text="       Room Name" />
+            <Label text="Room Name" />
             <ComboBox fx:id="roomComboBox" prefWidth="150.0" />
             </children></HBox>
         <TableView fx:id="reservationTableView" layoutY="338.0" prefHeight="362.0" prefWidth="894.0">
@@ -60,30 +60,48 @@
                 <TableColumn fx:id="reservationCustomerName" prefWidth="149.0" text="Customer Name" />
             </columns>
         </TableView>
-        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="232.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
-            <children>
-                <Label prefHeight="18.0" prefWidth="82.0" text="Checked-in" />
-                <DateTimePicker fx:id="reservationCheckedInDatePicker" prefWidth="150.0" />
-                <Label text="Checked-out" />
-                <DateTimePicker fx:id="reservationCheckedOutDatePicker" prefWidth="150.0" />
-            </children>
-        </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="178.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="150.0" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
          <children>
                 <Label prefHeight="18.0" prefWidth="60.0" text="Check-in" />
-                <DateTimePicker fx:id="reservationCheckInDatePicker" prefWidth="150.0" />
+                <DateTimePicker fx:id="reservationCheckInDateTimePicker" prefHeight="24.0" prefWidth="165.0" />
             <Label text="Check-out" />
-                <DateTimePicker fx:id="reservationCheckOutDatePicker" prefWidth="150.0" />
+                <DateTimePicker fx:id="reservationCheckOutDateTimePicker" prefHeight="24.0" prefWidth="165.0" />
          </children>
       </HBox>
+      <VBox layoutX="20.0" layoutY="207.0" prefHeight="118.0" prefWidth="258.0" style="-fx-background-color: #AABBAA;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="258.0" spacing="10.0">
+               <children>
+                  <Label text="Customer" />
+                  <ComboBox fx:id="customerComboBox" prefHeight="24.0" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="237.0" spacing="10.0">
+               <children>
+                  <Label fx:id="guestsLabel" text="Guest(s)  " />
+                  <ComboBox fx:id="guestComboBox" disable="true" prefWidth="150.0" />
+               </children>
+            </HBox>
 
 
-      <Button fx:id="addButton" layoutX="585.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
-      <Button fx:id="deleteButton" layoutX="715.0" layoutY="226.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Delete" />
-      <Label layoutX="585.0" layoutY="130.0" text="Customer" />
-      <ComboBox fx:id="customerComboBox" layoutX="657.0" layoutY="124.0" prefWidth="150.0" />
-      <Label fx:id="guestsLabel" layoutX="585.0" layoutY="182.0" text="Guest(s)" />
-      <ComboBox fx:id="guestComboBox" disable="true" layoutX="657.0" layoutY="178.0" prefWidth="150.0" />
-        <Button fx:id="buttonCheckedInOut" layoutX="20.0" layoutY="293.0" mnemonicParsing="false" text="UPDATE Checked-In/Out" />
+            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Add" />
+         </children></VBox>
+      <VBox layoutX="598.0" layoutY="108.0" prefHeight="125.0" prefWidth="279.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+         <children>
+              <HBox alignment="CENTER_LEFT" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+                  <children>
+                      <Label prefHeight="18.0" prefWidth="82.0" text="Checked-in" />
+                      <DateTimePicker fx:id="reservationCheckedInDateTimePicker" prefWidth="160.0" />
+                  </children>
+              </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="41.0" spacing="10.0" style="-fx-background-color: #AABBAA;">
+               <children>
+                      <Label text="Checked-out" />
+                      <DateTimePicker fx:id="reservationCheckedOutDateTimePicker" prefWidth="160.0" />
+               </children>
+            </HBox>
+              <Button fx:id="buttonCheckedInOut" mnemonicParsing="false" text="UPDATE Checked-In/Out" />
+         </children></VBox>
+      <Separator layoutX="545.0" layoutY="114.0" orientation="VERTICAL" prefHeight="200.0" />
     </children>
 </AnchorPane>

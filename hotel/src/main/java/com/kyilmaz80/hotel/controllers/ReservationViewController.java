@@ -73,16 +73,16 @@ public class ReservationViewController extends SceneController implements Initia
     private Spinner<Integer> roomCapacitySpinner;
 
     @FXML
-    private DateTimePicker reservationCheckInDatePicker;
+    private DateTimePicker reservationCheckInDateTimePicker;
 
     @FXML
-    private DateTimePicker reservationCheckedInDatePicker;
+    private DateTimePicker reservationCheckedInDateTimePicker;
 
     @FXML
-    private DateTimePicker reservationCheckedOutDatePicker;
+    private DateTimePicker reservationCheckedOutDateTimePicker;
 
     @FXML
-    private DateTimePicker reservationCheckOutDatePicker;
+    private DateTimePicker reservationCheckOutDateTimePicker;
 
     private RoomModel roomModel;
     private ReservationModel reservationModel;
@@ -209,8 +209,8 @@ public class ReservationViewController extends SceneController implements Initia
                 }
 
 
-                reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
-                reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
+                reservationCheckIn = reservationCheckInDateTimePicker.getDateTimeValue();
+                reservationCheckOut = reservationCheckOutDateTimePicker.getDateTimeValue();
 
                 //TODO: fix
                 if (!isSelectedRoomAvailable()) {
@@ -280,31 +280,6 @@ public class ReservationViewController extends SceneController implements Initia
             }
         });
 
-        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("On click Delete");
-                var selected = reservationTableView.getSelectionModel().getSelectedItem();
-                if (selected == null) {
-                    ViewUtils.showAlert("No reservation item selected!");
-                    return;
-                }
-                System.out.println("selected: " + selected);
-                var selectedId = selected.getId();
-                System.out.println("Deleting id " + selectedId);
-
-                reservationCustomerModel.deleteReservationCustomerByReservationId(selectedId);
-                reservationCustomerModel.selectAllReservationCustomers();
-                //reservationViewModel.deleteReservation(selectedId);
-                reservationModel.deleteReservation(selectedId);
-                reservationViewModel.selectAllReservations();
-                reservationModel.selectAllReservations();
-                reservationTableView.setItems(reservationViewModel.getReservations());
-
-
-
-            }
-        });
 
         buttonCheckedInOut.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -316,12 +291,13 @@ public class ReservationViewController extends SceneController implements Initia
                 }
                 System.out.println("selected: " + selected);
                 var selectedId = selected.getId();
-                if (reservationCheckedInDatePicker.getDateTimeValue() != null)  {
-                    reservationModel.updateReservationCheckedIn(selectedId, reservationCheckedInDatePicker.getDateTimeValue());
+                System.out.println("checkedin: " + reservationCheckedInDateTimePicker.getValue());
+                if (reservationCheckedInDateTimePicker.getValue() != null)  {
+                    reservationModel.updateReservationCheckedIn(selectedId, reservationCheckedInDateTimePicker.getDateTimeValue());
                 }
 
-                if (reservationCheckedOutDatePicker.getDateTimeValue() != null) {
-                    reservationModel.updateReservationCheckedOut(selectedId, reservationCheckedOutDatePicker.getDateTimeValue());
+                if (reservationCheckedOutDateTimePicker.getValue() != null) {
+                    reservationModel.updateReservationCheckedOut(selectedId, reservationCheckedOutDateTimePicker.getDateTimeValue());
                 }
 
                 reservationViewModel.selectAllReservations();
@@ -354,8 +330,8 @@ public class ReservationViewController extends SceneController implements Initia
     }
 
     private boolean validateInputs() {
-        LocalDateTime reservationCheckIn = reservationCheckInDatePicker.getDateTimeValue();
-        LocalDateTime reservationCheckOut = reservationCheckOutDatePicker.getDateTimeValue();
+        LocalDateTime reservationCheckIn = reservationCheckInDateTimePicker.getDateTimeValue();
+        LocalDateTime reservationCheckOut = reservationCheckOutDateTimePicker.getDateTimeValue();
         LocalDateTime fromDateTime = LocalDateTime.from(reservationCheckIn);
         long hoursDiff = fromDateTime.until(reservationCheckOut, ChronoUnit.HOURS);
         long daysDiff = fromDateTime.until(reservationCheckOut, ChronoUnit.DAYS);
@@ -423,7 +399,7 @@ public class ReservationViewController extends SceneController implements Initia
     }
 
     private boolean areAllInputsEntered() {
-
+        //TODO:
         return true;
     }
 

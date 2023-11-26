@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.sql.Date;
@@ -89,7 +91,7 @@ public class CustomerController extends SceneController implements Initializable
                 }
 
                 if (!validateInputs()) {
-                    System.out.println("Inputs not valid!");
+                    System.err.println("Inputs not valid!");
                     return;
                 }
 
@@ -152,25 +154,32 @@ public class CustomerController extends SceneController implements Initializable
         String customerDesc = customerDescriptionTextArea.getText();
 
         if (!customerName.isEmpty() && !StringUtils.inputValid7(customerName)) {
+            customerFullNameTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("CustomerName Input not valid!");
             return false;
         }
+        customerFullNameTextField.setBorder(Border.EMPTY);
 
         if (!customerId.isEmpty() && !StringUtils.inputValid4(customerId)) {
+            customerIdentityNumberTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("Customer ID Input not valid! Must be 11 characters!");
             return false;
         }
+        customerIdentityNumberTextField.setBorder(Border.EMPTY);
 
         if (!customerPhone.isEmpty() && !StringUtils.inputValid5(customerPhone)) {
+            customerPhoneNumberTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("Customer Phone Input not valid! Must be 10 characters!");
             return false;
         }
+        customerPhoneNumberTextField.setBorder(Border.EMPTY);
 
         if (!customerDesc.isEmpty() && !StringUtils.inputValid6(customerDesc)) {
+            customerDescriptionTextArea.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("Customer Desc Input not valid! Invalid characters!");
             return false;
         }
-
+        customerDescriptionTextArea.setBorder(Border.EMPTY);
 
         return true;
     }

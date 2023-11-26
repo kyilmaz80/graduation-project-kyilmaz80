@@ -92,9 +92,13 @@ public class HotelController extends SceneController implements Initializable {
 
     private ReservationViewModel reservationViewModel;
 
+    private ReservationCustomerModel reservationCustomerModel;
+    private ReservationModel reservationModel;
+    private ReservationServiceModel reservationServiceModel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Initialize hotel controller");
 
         // map to ReservationView
         reservationId.setCellValueFactory(new PropertyValueFactory<ReservationView, Integer>("id"));
@@ -105,6 +109,15 @@ public class HotelController extends SceneController implements Initializable {
         reservationCheckedInDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedin_time"));
         reservationCheckedOutDate.setCellValueFactory(new PropertyValueFactory<ReservationView, Timestamp>("checkedout_time"));
         reservationCustomerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customer_name"));
+
+        reservationModel = new ReservationModel();
+        reservationModel.selectAllReservations();
+
+        reservationCustomerModel = new ReservationCustomerModel();
+        reservationCustomerModel.selectAllReservationCustomers();
+
+        reservationServiceModel = new ReservationServiceModel();
+        reservationServiceModel.selectAllReservationServices();;
 
         reservationViewModel = new ReservationViewModel();
         // table view init
@@ -179,6 +192,41 @@ public class HotelController extends SceneController implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                  */
+
+            }
+        });
+
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("On click Delete");
+                var selected = reservationTableView.getSelectionModel().getSelectedItem();
+                if (selected == null) {
+                    ViewUtils.showAlert("No reservation item selected!");
+                    return;
+                }
+                System.out.println("selected: " + selected);
+                var selectedId = selected.getId();
+                System.out.println("Deleting id " + selectedId);
+                reservationCustomerModel.deleteReservationCustomerByReservationId(selectedId);
+                reservationCustomerModel.selectAllReservationCustomers();
+                reservationServiceModel.deleteReservationServiceByReservationId(selectedId);
+                reservationServiceModel.selectAllReservationServices();
+                reservationModel.deleteReservation(selectedId);
+                reservationModel.selectAllReservations();
+                reservationViewModel.selectAllReservations();
+                reservationTableView.setItems(reservationViewModel.getReservations());
+
+                /*
+                reservationCustomerModel.deleteReservationCustomerByReservationId(selectedId);
+                reservationCustomerModel.selectAllReservationCustomers();
+                //reservationViewModel.deleteReservation(selectedId);
+                reservationModel.deleteReservation(selectedId);
+                reservationViewModel.selectAllReservations();
+                reservationModel.selectAllReservations();
+                reservationTableView.setItems(reservationViewModel.getReservations());
+                */
+
 
             }
         });
