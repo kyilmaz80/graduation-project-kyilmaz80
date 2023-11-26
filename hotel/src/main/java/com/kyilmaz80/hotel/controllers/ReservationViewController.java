@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -339,19 +341,27 @@ public class ReservationViewController extends SceneController implements Initia
         System.out.println("Reservation hours: " + hoursDiff);
 
         if (reservationCheckIn.toLocalDate().getDayOfMonth() < LocalDate.now().getDayOfMonth()) {
+            reservationCheckInDateTimePicker.setBorder(Border.stroke(Paint.valueOf("RED")));
             ViewUtils.showAlert("Check-in must be greater than " + LocalDateTime.now());
             return false;
         }
+        reservationCheckInDateTimePicker.setBorder(Border.EMPTY);
 
         if (daysDiff < 0 || (daysDiff == 0 && hoursDiff == 0)) {
+            reservationCheckOutDateTimePicker.setBorder(Border.stroke(Paint.valueOf("RED")));
             ViewUtils.showAlert("Check-out must be greater than Check-in!");
             return false;
         }
+        reservationCheckOutDateTimePicker.setBorder(Border.EMPTY);
+
         if (daysDiff == 0 && hoursDiff < 24 ) {
+            reservationCheckInDateTimePicker.setBorder(Border.stroke(Paint.valueOf("RED")));
+            reservationCheckOutDateTimePicker.setBorder(Border.stroke(Paint.valueOf("RED")));
             ViewUtils.showAlert("No hour based Check-in!");
             return false;
         }
-
+        reservationCheckInDateTimePicker.setBorder(Border.EMPTY);
+        reservationCheckOutDateTimePicker.setBorder(Border.EMPTY);
 
         return true;
     }

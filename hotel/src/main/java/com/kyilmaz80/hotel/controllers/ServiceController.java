@@ -14,6 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 
 import java.net.URL;
 import java.util.Map;
@@ -118,10 +120,11 @@ public class ServiceController extends SceneController implements Initializable 
         String serviceName = serviceNameTextField.getText();
 
         if (!serviceName.isEmpty() && !StringUtils.inputValid7(serviceName)) {
+            serviceNameTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("ServiceName Input not valid!");
             return false;
         }
-
+        serviceNameTextField.setBorder(Border.EMPTY);
         return true;
     }
 }

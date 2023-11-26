@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Paint;
 import javafx.util.Pair;
 
 import java.math.BigDecimal;
@@ -217,20 +219,27 @@ public class RoomController extends SceneController implements Initializable {
 
 
         if (!roomName.isEmpty() && !StringUtils.inputValid1(roomName)) {
+            roomNameTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("RoomName Input not valid!");
             return false;
         }
 
+        roomNameTextField.setBorder(Border.EMPTY);
+
         if (!roomPrice.isEmpty() & !StringUtils.inputValid2(roomPrice)) {
+            roomPriceTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("RoomPrice Input not valid!");
             return false;
         }
 
+        roomPriceTextField.setBorder(Border.EMPTY);
+
         if (!roomCapacity.isEmpty() & !StringUtils.inputValid3(roomCapacity)) {
+            roomCapacityTextField.setBorder(Border.stroke(Paint.valueOf("RED")));
             System.err.println("RoomCapacity Input not valid!");
             return false;
         }
-
+        roomCapacityTextField.setBorder(Border.EMPTY);
 
         return true;
     }
